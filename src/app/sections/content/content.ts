@@ -11,6 +11,7 @@ import {
   passwordStrengthValidator,
   confirmPasswordValidator,
 } from '../../utils/password-validators/password-validators';
+import { profanityValidator } from '../../utils/bad-words-validator';
 
 @Component({
   selector: 'content',
@@ -21,14 +22,18 @@ import {
 export class Content implements OnInit {
   registerForm!: FormGroup;
   recipientEmail = 'brightpixelstudios@gmail.com';
-  //userForm = { username: '', email: '', password: '', profile: '' };
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.registerForm = this.fb.group(
       {
-        username: new FormControl('', [Validators.required, Validators.minLength(7)]),
+        username: new FormControl('', [
+          Validators.required,
+          Validators.minLength(7),
+          Validators.pattern(/^\S*$/),
+          profanityValidator(),
+        ]),
         email: ['', [Validators.required, Validators.email]],
         password: [
           '',
@@ -39,7 +44,11 @@ export class Content implements OnInit {
           ],
         ],
         confirmPassword: ['', [Validators.required]],
-        profile: new FormControl('', [Validators.required, Validators.minLength(30)]),
+        profile: new FormControl('', [
+          Validators.required,
+          Validators.minLength(30),
+          profanityValidator(),
+        ]),
       },
       {
         // Apply cross-field validation rules to the whole FormGroup

@@ -18,7 +18,12 @@
                 class="form-control"
               />
               @if (registerForm.get('username')?.invalid && registerForm.get('username')?.touched) {
-                <div class="error-message">Username must be at least 8 characters long.</div>
+                <div class="error-message">
+                  Username must be at least 8 characters long with no spaces.
+                </div>
+              }
+              @if (f['username'].touched && f['username'].errors?.['profanity']) {
+                <div class="error-message">Please remove inappropriate language.</div>
               }
               <input
                 style="min-width: 300px"
@@ -97,10 +102,13 @@
                 placeholder="Basic profile..."
                 class="form-control"
               ></textarea>
-              @if (registerForm.get('profile')?.invalid && registerForm.get('profile')?.touched) {
+              @if (f['profile'].touched && f['profile'].errors) {
                 <div class="error-message">
                   Please provide a basic profile of at least 30 characters.
                 </div>
+              }
+              @if (f['profile'].touched && f['profile'].errors?.['profanity']) {
+                <div class="error-message">Please remove inappropriate language.</div>
               }
 
               <!-- Disable submit button if form rules aren't met -->
