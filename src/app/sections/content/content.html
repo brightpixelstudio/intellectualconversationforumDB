@@ -1,0 +1,209 @@
+<div class="row content-container">
+  <div class="col-12">
+    <div class="row">
+      <div class="content-container col-12 pb-4">
+        <div class="row pt-4">
+          <div class="col-1"></div>
+          <div class="col-10">
+            <p>Please create a new profile below:</p>
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+              <input
+                style="min-width: 300px"
+                type="text"
+                id="username"
+                name="username"
+                required
+                formControlName="username"
+                placeholder="Please enter a username..."
+                class="form-control"
+              />
+              @if (registerForm.get('username')?.invalid && registerForm.get('username')?.touched) {
+                <div class="error-message">Username must be at least 8 characters long.</div>
+              }
+              <input
+                style="min-width: 300px"
+                type="email"
+                id="email"
+                name="email"
+                required
+                email
+                formControlName="email"
+                placeholder="Please enter an email address..."
+                class="form-control"
+              />
+              @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+                <div class="error-message">Please enter a valid email address.</div>
+              }
+              <input
+                style="min-width: 300px"
+                type="password"
+                formControlName="password"
+                placeholder="Please enter a password..."
+                class="form-control"
+              />
+
+              @if (f['password'].touched && f['password'].errors) {
+                <div class="error-message">
+                  @if (f['password'].errors['required']) {
+                    Password is required.<br />
+                  }
+                  @if (f['password'].errors['minlength']) {
+                    Password must be at least 8 characters long.<br />
+                  }
+
+                  <!-- Breakdown of individual missing requirements -->
+                  @if (f['password'].errors['passwordStrength']) {
+                    <div class="error-message">
+                      @if (!f['password'].errors['passwordStrength'].hasUpperCase) {
+                        Must include an uppercase letter.<br />
+                      }
+                      @if (!f['password'].errors['passwordStrength'].hasLowerCase) {
+                        Must include a lowercase letter.<br />
+                      }
+                      @if (!f['password'].errors['passwordStrength'].hasNumeric) {
+                        Must include a number.<br />
+                      }
+                      @if (!f['password'].errors['passwordStrength'].hasSpecial) {
+                        Must include a special character.<br />
+                      }
+                    </div>
+                  }
+                </div>
+              }
+              <input
+                style="min-width: 300px"
+                type="password"
+                formControlName="confirmPassword"
+                placeholder="Please confirm your password..."
+                class="form-control"
+              />
+              @if (f['confirmPassword'].touched && f['confirmPassword'].errors) {
+                <div class="error-message">
+                  @if (f['confirmPassword'].errors['required']) {
+                    Please confirm your password.<br />
+                  }
+                  @if (f['confirmPassword'].errors['passwordMismatch']) {
+                    Passwords do not match.
+                  }
+                </div>
+              }
+              <textarea
+                style="min-width: 300px"
+                type="text"
+                id="profile"
+                rows="3"
+                required
+                formControlName="profile"
+                placeholder="Basic profile..."
+                class="form-control"
+              ></textarea>
+              @if (registerForm.get('profile')?.invalid && registerForm.get('profile')?.touched) {
+                <div class="error-message">
+                  Please provide a basic profile of at least 30 characters.
+                </div>
+              }
+
+              <!-- Disable submit button if form rules aren't met -->
+              <button type="submit" [disabled]="registerForm.invalid" class="btn btn-primary mt-4">
+                Submit Profile
+              </button>
+            </form>
+            <!--
+              <textarea
+                style="min-width: 300px"
+                type="text"
+                id="profile"
+                name="profile"
+                required
+                ngModel
+                #profileInput="ngModel"
+                rows="2"
+                placeholder="Basic Profile"
+                class="form-control"
+              ></textarea>
+              @if ((profileInput.touched || userForm.submitted) && profileInput.invalid) {
+                <div class="error-message">Please enter a basic profile.</div>
+              }
+            -->
+          </div>
+          <div class="col-1"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="content-container col-12 pb-5">
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+          <hr />
+          <p>Members</p>
+          <table class="table table-striped table-hover">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Zipcode</th>
+                <th scope="col">Profile</th>
+                <th scope="col">Join Date</th>
+                <th scope="col">Last Login</th>
+                <th scope="col">Blocked</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Lowrepping</td>
+                <td>brightpixelstudios@gmail.com</td>
+                <td>29680</td>
+                <td>
+                  My Name is Bret Mitchell and I am happy to be part of this new forum. I am tech
+                  person and would like to expand my knowledge in different field.
+                </td>
+                <td>9/10/2016</td>
+                <td>9/13/2016</td>
+                <td>No</td>
+              </tr>
+              <tr>
+                <td>testinguser</td>
+                <td>brightpixelstudios@gmail.com</td>
+                <td>29680</td>
+                <td>
+                  My Name is Smith Johnson and I am happy to be part of this new forum. I am an HR
+                  tech person and would like to expand my knowledge in different field.
+                </td>
+                <td>9/3/2016</td>
+                <td>9/4/2016</td>
+                <td>No</td>
+              </tr>
+              <tr>
+                <td>testinguser2</td>
+                <td>testing@gmail.com</td>
+                <td>33619</td>
+                <td>
+                  My Name is Diane Smith and I am happy to be part of this new forum. I am an ER
+                  tech person and would like to expand my knowledge in different field.
+                </td>
+                <td>9/1/2016</td>
+                <td>9/10/2016</td>
+                <td>No</td>
+              </tr>
+              <tr>
+                <td>testinguser23</td>
+                <td>myemail@gmail.com</td>
+                <td>33609</td>
+                <td>
+                  My Name is Scotty Micheals and I am happy to be part of this new forum. I am an
+                  Handyman and would like to expand my knowledge in different field.
+                </td>
+                <td>8/23/2016</td>
+                <td>9/2/2016</td>
+                <td>No</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-1"></div>
+      </div>
+    </div>
+  </div>
+</div>
