@@ -1,0 +1,30 @@
+
+.navbar {
+  margin-left: -30px;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.nav-links a:hover {
+  background-color: #555;
+}
+
+/* Style for the currently active route */
+.active-link {
+  background-color: #007bff;
+}

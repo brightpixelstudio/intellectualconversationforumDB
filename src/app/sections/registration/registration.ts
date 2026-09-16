@@ -14,12 +14,12 @@ import {
 import { profanityValidator } from '../../utils/bad-words-validator';
 
 @Component({
-  selector: 'content',
+  selector: 'registration',
   imports: [ReactiveFormsModule, FormsModule],
-  templateUrl: './content.html',
-  styleUrl: './content.css',
+  templateUrl: './registration.html',
+  styleUrl: './registration.css',
 })
-export class Content implements OnInit {
+export class Registration implements OnInit {
   registerForm!: FormGroup;
   recipientEmail = 'brightpixelstudios@gmail.com';
 

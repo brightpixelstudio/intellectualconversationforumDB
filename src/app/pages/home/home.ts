@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Content } from '../../sections/content/content';
+import { Registration } from '../../sections/registration/registration';
 
 @Component({
   selector: 'home',
-  imports: [Content],
+  imports: [Registration],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
