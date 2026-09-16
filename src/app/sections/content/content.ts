@@ -28,6 +28,11 @@ export class Content implements OnInit {
   ngOnInit(): void {
     this.registerForm = this.fb.group(
       {
+        name: new FormControl('', [
+          Validators.required,
+          Validators.minLength(8),
+          profanityValidator(),
+        ]),
         username: new FormControl('', [
           Validators.required,
           Validators.minLength(7),
@@ -69,12 +74,10 @@ export class Content implements OnInit {
     }
 
     /*
-    if (form.valid) {
-
+    if (this.registerForm.valid {
 
       // is the username email address already taken? (API) or is this email blocked or suspended?
       
-
       const subject = encodeURIComponent('Intellectual Conversation Forum Sign-up');
       const body = encodeURIComponent(
         `Username: ${form.value.username}\nEmail: ${form.value.email}\nPassword: ${form.value.password}\nProfile: ${form.value.profile}`,
@@ -86,6 +89,6 @@ export class Content implements OnInit {
       // Trigger the operating system's default email client
       window.open(mailtoUrl, '_blank');
     }
-      */
+    */
   }
 }

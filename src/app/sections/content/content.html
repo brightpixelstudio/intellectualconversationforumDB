@@ -10,6 +10,26 @@
               <input
                 style="min-width: 300px"
                 type="text"
+                id="name"
+                name="name"
+                required
+                formControlName="name"
+                placeholder="Please enter a full name..."
+                class="form-control"
+              />
+              @if (f['name']?.invalid && f['name']?.touched && f['name'].errors?.['required']) {
+                <div class="error-message">Full name is required.<br /></div>
+              }
+              @if (f['name']?.invalid && f['name']?.touched && f['name'].errors?.['minlength']) {
+                <div class="error-message">Full name must be at least 8 characters long.</div>
+              }
+              @if (f['name'].touched && f['name'].errors?.['profanity']) {
+                <div class="error-message">Please remove inappropriate language.</div>
+              }
+
+              <input
+                style="min-width: 300px"
+                type="text"
                 id="username"
                 name="username"
                 required
@@ -17,7 +37,7 @@
                 placeholder="Please enter a username..."
                 class="form-control"
               />
-              @if (registerForm.get('username')?.invalid && registerForm.get('username')?.touched) {
+              @if (f['username']?.invalid && f['username']?.touched) {
                 <div class="error-message">
                   Username must be at least 8 characters long with no spaces.
                 </div>
@@ -36,7 +56,7 @@
                 placeholder="Please enter an email address..."
                 class="form-control"
               />
-              @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+              @if (f['email']?.invalid && f['email']?.touched) {
                 <div class="error-message">Please enter a valid email address.</div>
               }
               <input
