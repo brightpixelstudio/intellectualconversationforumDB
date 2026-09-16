@@ -55,8 +55,8 @@ export class Registration implements OnInit {
           '',
           [
             Validators.required,
-            Validators.minLength(8), // Native length check
-            passwordStrengthValidator(), // Custom strength check
+            Validators.minLength(2), // Native length check
+            //passwordStrengthValidator(), // Custom strength check
           ],
         ],
         confirmPassword: ['', [Validators.required]],
@@ -68,7 +68,7 @@ export class Registration implements OnInit {
       },
       {
         // Apply cross-field validation rules to the whole FormGroup
-        validators: [confirmPasswordValidator('password', 'confirmPassword')],
+        //validators: [confirmPasswordValidator('password', 'confirmPassword')],
       },
     );
   }
@@ -78,7 +78,6 @@ export class Registration implements OnInit {
   }
 
   onSubmit() {
-    /*
     if (this.registerForm.valid) {
       console.log('Form Data:', this.registerForm.value); // Access all values as an object
 
@@ -90,6 +89,5 @@ export class Registration implements OnInit {
     } else {
       console.log('Form is invalid');
     }
-      */
   }
 }
