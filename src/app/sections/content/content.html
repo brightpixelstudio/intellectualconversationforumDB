@@ -61,6 +61,24 @@
               }
               <input
                 style="min-width: 300px"
+                id="zip"
+                name="zip"
+                type="number"
+                pattern="[0-9]"
+                oninput="if (this.value.length > 5) this.value = this.value.slice(0, 5);"
+                required
+                formControlName="zip"
+                placeholder="Please enter a zipcode..."
+                class="form-control"
+              />
+              @if (f['zip']?.invalid && f['zip']?.touched && f['zip'].errors?.['required']) {
+                <div class="error-message">Zipcode is required.<br /></div>
+              }
+              @if (f['zip']?.invalid && f['zip']?.touched && f['zip'].errors?.['minlength']) {
+                <div class="error-message">Zipcode must be 5 number.</div>
+              }
+              <input
+                style="min-width: 300px"
                 type="password"
                 formControlName="password"
                 placeholder="Please enter a password..."

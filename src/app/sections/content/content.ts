@@ -40,6 +40,12 @@ export class Content implements OnInit {
           profanityValidator(),
         ]),
         email: ['', [Validators.required, Validators.email]],
+        zip: new FormControl('', [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(5),
+          Validators.pattern(/^[0-9]*$/),
+        ]),
         password: [
           '',
           [
