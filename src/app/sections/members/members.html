@@ -5,42 +5,189 @@
         <div class="row pt-4">
           <div class="col-1"></div>
           <div class="col-10">
-            <h3 class="pb-3">Members</h3>
-            <p>Edit, Delete and View statistics of Members</p>
-            <table class="table table-striped table-hover">
-              <thead class="custom-thead">
-                <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">Username</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Zipcode</th>
-                  <th scope="col">Post Count</th>
-                  <th scope="col">Profile</th>
-                  <th scope="col">Last Posted</th>
-                  <th scope="col">Last Login</th>
-                  <th scope="col">Joined</th>
-                  <th scope="col">Blocked</th>
-                </tr>
-              </thead>
-              <tbody>
-                @for (theMember of memberList; track theMember.userid; let i = $index) {
+            <div class="row">
+              <div class="col-12">
+                <h3 class="pb-3">Members</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <p>Edit, Delete and View statistics of Members</p>
+              </div>
+              <div class="col-6 membertype">
+                <select
+                  #membertype
+                  name="membertype"
+                  id="membertype"
+                  (change)="onMemberTypeChange(membertype.value)"
+                >
+                  <option value="all">All Members</option>
+                  <option value="newest">Newest</option>
+                  <option value="mostposts">Most Posts</option>
+                  <option value="lastlogin">Last Logins</option>
+                </select>
+              </div>
+            </div>
+            @if (reportType === MemberReportType.All) {
+              <table class="table table-striped table-hover">
+                <thead class="custom-thead">
                   <tr>
-                    <td>{{ theMember.name }}</td>
-                    <td>{{ theMember.username }}</td>
-                    <td>{{ theMember.email }}</td>
-                    <td>{{ theMember.zipcode }}</td>
-                    <td>{{ theMember.count }}</td>
-                    <td>
-                      {{ theMember.profile }}
-                    </td>
-                    <td>{{ theMember.datelastpost }}</td>
-                    <td>{{ theMember.datelastlogin }}</td>
-                    <td>{{ theMember.dateadded }}</td>
-                    <td>{{ theMember.blocked }}</td>
+                    <th scope="col">Name</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Zipcode</th>
+                    <th scope="col">Post Count</th>
+                    <th scope="col">Profile</th>
+                    <th scope="col">Last Posted</th>
+                    <th scope="col">Last Login</th>
+                    <th scope="col">Joined</th>
+                    <th scope="col">Blocked</th>
                   </tr>
-                }
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  @for (
+                    theMember of memberListGetAllProfile;
+                    track theMember.userid;
+                    let i = $index
+                  ) {
+                    <tr>
+                      <td>{{ theMember.name }}</td>
+                      <td>{{ theMember.username }}</td>
+                      <td>{{ theMember.email }}</td>
+                      <td>{{ theMember.zipcode }}</td>
+                      <td>{{ theMember.count }}</td>
+                      <td>
+                        {{ theMember.profile }}
+                      </td>
+                      <td>{{ theMember.datelastlogin | date: 'shortDate' }}</td>
+                      <td>{{ theMember.datelastlogin | date: 'shortDate' }}</td>
+                      <td>{{ theMember.dateadded | date: 'shortDate' }}</td>
+                      <td>{{ theMember.blocked }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            }
+            @if (reportType === MemberReportType.Newest) {
+              <table class="table table-striped table-hover">
+                <thead class="custom-thead">
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Zipcode</th>
+                    <th scope="col">Post Count</th>
+                    <th scope="col">Profile</th>
+                    <th scope="col">Last Posted</th>
+                    <th scope="col">Last Login</th>
+                    <th scope="col">Joined</th>
+                    <th scope="col">Blocked</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (
+                    theMember of memberListGetNewestMembers;
+                    track theMember.userid;
+                    let i = $index
+                  ) {
+                    <tr>
+                      <td>{{ theMember.name }}</td>
+                      <td>{{ theMember.username }}</td>
+                      <td>{{ theMember.email }}</td>
+                      <td>{{ theMember.zipcode }}</td>
+                      <td>{{ theMember.count }}</td>
+                      <td>
+                        {{ theMember.profile }}
+                      </td>
+                      <td>{{ theMember.datelastlogin | date: 'shortDate' }}</td>
+                      <td>{{ theMember.datelastlogin | date: 'shortDate' }}</td>
+                      <td>{{ theMember.dateadded | date: 'shortDate' }}</td>
+                      <td>{{ theMember.blocked }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            }
+            @if (reportType === MemberReportType.LastLogin) {
+              <table class="table table-striped table-hover">
+                <thead class="custom-thead">
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Zipcode</th>
+                    <th scope="col">Post Count</th>
+                    <th scope="col">Profile</th>
+                    <th scope="col">Last Posted</th>
+                    <th scope="col">Last Login</th>
+                    <th scope="col">Joined</th>
+                    <th scope="col">Blocked</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (
+                    theMember of memberListLatestLoginsMembers;
+                    track theMember.userid;
+                    let i = $index
+                  ) {
+                    <tr>
+                      <td>{{ theMember.name }}</td>
+                      <td>{{ theMember.username }}</td>
+                      <td>{{ theMember.email }}</td>
+                      <td>{{ theMember.zipcode }}</td>
+                      <td>{{ theMember.count }}</td>
+                      <td>
+                        {{ theMember.profile }}
+                      </td>
+                      <td>{{ theMember.datelastlogin | date: 'shortDate' }}</td>
+                      <td>{{ theMember.datelastlogin | date: 'shortDate' }}</td>
+                      <td>{{ theMember.dateadded | date: 'shortDate' }}</td>
+                      <td>{{ theMember.blocked }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            }
+            @if (reportType === MemberReportType.MostPosts) {
+              <table class="table table-striped table-hover">
+                <thead class="custom-thead">
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Zipcode</th>
+                    <th scope="col">Post Count</th>
+                    <th scope="col">Profile</th>
+                    <th scope="col">Last Posted</th>
+                    <th scope="col">Last Login</th>
+                    <th scope="col">Joined</th>
+                    <th scope="col">Blocked</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (
+                    theMember of memberListMostPostsMembers;
+                    track theMember.userid;
+                    let i = $index
+                  ) {
+                    <tr>
+                      <td>{{ theMember.name }}</td>
+                      <td>{{ theMember.username }}</td>
+                      <td>{{ theMember.email }}</td>
+                      <td>{{ theMember.zipcode }}</td>
+                      <td>{{ theMember.count }}</td>
+                      <td>
+                        {{ theMember.profile }}
+                      </td>
+                      <td>{{ theMember.datelastlogin | date: 'shortDate' }}</td>
+                      <td>{{ theMember.datelastlogin | date: 'shortDate' }}</td>
+                      <td>{{ theMember.dateadded | date: 'shortDate' }}</td>
+                      <td>{{ theMember.blocked }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            }
           </div>
           <div class="col-1"></div>
         </div>

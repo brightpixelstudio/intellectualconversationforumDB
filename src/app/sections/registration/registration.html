@@ -64,8 +64,7 @@
                 style="min-width: 300px"
                 id="zip"
                 name="zip"
-                type="number"
-                pattern="[0-9]"
+                type="text"
                 oninput="if (this.value.length > 5) this.value = this.value.slice(0, 5);"
                 required
                 formControlName="zip"
@@ -94,8 +93,6 @@
                   @if (f['password'].errors['minlength']) {
                     Password must be at least 8 characters long.<br />
                   }
-
-                  <!-- Breakdown of individual missing requirements -->
                   @if (f['password'].errors['passwordStrength']) {
                     <div class="error-message">
                       @if (!f['password'].errors['passwordStrength'].hasUpperCase) {

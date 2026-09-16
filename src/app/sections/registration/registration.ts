@@ -1,4 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { JsonPipe } from '@angular/common';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -12,10 +13,11 @@ import {
   confirmPasswordValidator,
 } from '../../utils/password-validators/password-validators';
 import { profanityValidator } from '../../utils/bad-words-validator';
+import { ApiServiceUser } from '../../services/userservice';
 
 @Component({
   selector: 'registration',
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [ReactiveFormsModule, FormsModule, JsonPipe],
   templateUrl: './registration.html',
   styleUrl: './registration.css',
 })
@@ -23,7 +25,10 @@ export class Registration implements OnInit {
   registerForm!: FormGroup;
   recipientEmail = 'brightpixelstudios@gmail.com';
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private apiService: ApiServiceUser,
+  ) {}
 
   ngOnInit(): void {
     this.registerForm = this.fb.group(
@@ -73,28 +78,18 @@ export class Registration implements OnInit {
   }
 
   onSubmit() {
+    /*
     if (this.registerForm.valid) {
       console.log('Form Data:', this.registerForm.value); // Access all values as an object
+
+      // Pass the raw form values to your service
+      this.apiService.submitRegistrationForm(this.registerForm.value).subscribe({
+        next: (response) => console.log('Success!', response),
+        error: (err) => console.error('Submission failed', err),
+      });
     } else {
       console.log('Form is invalid');
     }
-
-    /*
-    if (this.registerForm.valid {
-
-      // is the username email address already taken? (API) or is this email blocked or suspended?
-      
-      const subject = encodeURIComponent('Intellectual Conversation Forum Sign-up');
-      const body = encodeURIComponent(
-        `Username: ${form.value.username}\nEmail: ${form.value.email}\nPassword: ${form.value.password}\nProfile: ${form.value.profile}`,
-      );
-
-      // Build the finalized mailto string
-      const mailtoUrl = `mailto:${this.recipientEmail}?subject=${subject}&body=${body}`;
-
-      // Trigger the operating system's default email client
-      window.open(mailtoUrl, '_blank');
-    }
-    */
+      */
   }
 }

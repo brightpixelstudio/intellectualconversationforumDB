@@ -1,16 +1,14 @@
 export interface GetAllProfileMembers {
   userid: number;
-  usertypeid: number;
-  type: string;
-  name: string;
   username: string;
   email: string;
-  password: string;
+  name: string;
   zipcode: number;
+  usertypeid: number;
+  type: string;
+  dateadded: Date;
+  datelastlogin: Date;
   count: number;
   profile: string;
-  datelastpost: Date;
-  datelastlogin: Date;
-  dateadded: Date;
   blocked: boolean;
 }
