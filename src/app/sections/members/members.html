@@ -65,13 +65,13 @@
                       <td>{{ theMember.dateadded | date: 'shortDate' }}</td>
                       <td>{{ theMember.blocked }}</td>
                       <td class="text-nowrap">
-                        <button
-                          type="button"
+                        <a
                           class="btn actionbtn editBtn"
                           title="Edit this member"
+                          [attr.href]="'/editprofile?userid=' + theMember.userid"
                         >
                           <fa-icon [icon]="faPencil" />
-                        </button>
+                        </a>
                         <button
                           type="button"
                           class="btn actionbtn statisticBtn"

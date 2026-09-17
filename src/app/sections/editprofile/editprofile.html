@@ -5,9 +5,9 @@
         <div class="row pt-4">
           <div class="col-1"></div>
           <div class="col-10">
-            <h3 class="pb-3">Registration</h3>
-            <p>Please create a new profile below:</p>
-            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <h3 class="pb-3">Edit Profile</h3>
+            <p>Please update your profile below:</p>
+            <form [formGroup]="updateProfileForm" (ngSubmit)="onSubmit()">
               <input
                 style="min-width: 300px"
                 type="text"
@@ -153,12 +153,16 @@
               }
 
               <!-- Disable submit button if form rules aren't met -->
-              <button type="submit" [disabled]="registerForm.invalid" class="btn btn-primary mt-4">
-                Register!
+              <button
+                type="submit"
+                [disabled]="updateProfileForm.invalid"
+                class="btn btn-primary mt-4"
+              >
+                Update Profile!
               </button>
 
               @if (showSuccess == true) {
-                <div class="successmsg">This new member was added.</div>
+                <div class="successmsg">This member was updated.</div>
               }
               @if (showError == true) {
                 <div class="errormsg">{{ errorMsg }}.</div>

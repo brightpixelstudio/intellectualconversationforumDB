@@ -17,13 +17,13 @@ import { profanityValidator } from '../../utils/bad-words-validator';
 import { ApiServiceUser } from '../../services/userservice';
 
 @Component({
-  selector: 'registration',
+  selector: 'editprofile',
   imports: [ReactiveFormsModule, FormsModule, JsonPipe],
-  templateUrl: './registration.html',
-  styleUrl: './registration.css',
+  templateUrl: './editprofile.html',
+  styleUrl: './editprofile.css',
 })
-export class Registration implements OnInit {
-  registerForm!: FormGroup;
+export class EditProfile implements OnInit {
+  updateProfileForm!: FormGroup;
   showSuccess = false;
   showError = false;
   errorMsg = '';
@@ -35,7 +35,7 @@ export class Registration implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.registerForm = this.fb.group(
+    this.updateProfileForm = this.fb.group(
       {
         name: new FormControl('', [
           Validators.required,
@@ -76,13 +76,16 @@ export class Registration implements OnInit {
         validators: [confirmPasswordValidator('password', 'confirmPassword')],
       },
     );
+
+    // load the members profile
   }
 
   get f() {
-    return this.registerForm.controls;
+    return this.updateProfileForm.controls;
   }
 
   onSubmit() {
+    /*
     this.showSuccess = false;
     this.showError = false;
 
@@ -109,5 +112,6 @@ export class Registration implements OnInit {
     } else {
       console.log('Form is invalid');
     }
+      */
   }
 }
