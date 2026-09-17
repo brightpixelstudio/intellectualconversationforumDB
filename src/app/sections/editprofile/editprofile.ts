@@ -15,6 +15,7 @@ import {
 } from '../../utils/password-validators/password-validators';
 import { profanityValidator } from '../../utils/bad-words-validator';
 import { ApiServiceUser } from '../../services/userservice';
+import { GetProfileMember } from '../../models/getprofilemember';
 
 @Component({
   selector: 'editprofile',
@@ -77,7 +78,16 @@ export class EditProfile implements OnInit {
       },
     );
 
+    // get the query string value
+    const userid = 1;
+
     // load the members profile
+    this.apiService.getUserProfile(userid).subscribe({
+      next: (GetProfileMember) => {
+        this.updateProfileForm.patchValue(GetProfileMember);
+      },
+      error: (err) => console.error('Failed to load user profile', err),
+    });
   }
 
   get f() {

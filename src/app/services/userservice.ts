@@ -6,12 +6,7 @@ import { GetAllProfileMembers } from '../models/getallprofilemembers';
 import { GetNewestMembers } from '../models/getnewestmembers';
 import { GetMostPostsMembers } from '../models/getmostpostsmembers';
 import { GetLatestLoginsMembers } from '../models/getlatestloginsmembers';
-
-/*
-import { Work } from '../models/work';
-import { Technology } from '../models/technology';
-import { Quote } from '../models/quote';
-*/
+import { GetProfileMember } from '../models/getprofilemember';
 
 @Injectable({
   providedIn: 'root', // Makes the service a global singleton
@@ -38,6 +33,11 @@ export class ApiServiceUser {
   // GET request to fetch data
   getLatestLoginsMembers(): Observable<GetLatestLoginsMembers[]> {
     return this.http.get<GetLatestLoginsMembers[]>(this.apiUrl + '/getLatestLoginsMembers');
+  }
+
+  // GET request to fetch data
+  getUserProfile(userid: number): Observable<GetProfileMember[]> {
+    return this.http.get<GetProfileMember[]>(this.apiUrl + `/getUserProfile?userid=${userid}`);
   }
 
   // Accept the raw data value as an argument
