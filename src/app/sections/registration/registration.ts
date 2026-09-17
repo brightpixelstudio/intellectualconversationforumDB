@@ -68,7 +68,7 @@ export class Registration implements OnInit {
         profile: new FormControl('', [
           Validators.required,
           Validators.minLength(30),
-          Validators.maxLength(1000),s
+          Validators.maxLength(1000),
           profanityValidator(),
         ]),
       },
