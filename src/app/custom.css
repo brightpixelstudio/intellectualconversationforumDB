@@ -79,6 +79,24 @@ textarea::placeholder,
 select::placeholder {
   color: rgb(184, 184, 184) !important;
 }
+
+.successmsg,
+.errormsg {
+  background-color: rgb(216, 255, 255);
+  border: 1px solid rgb(0, 170, 65);
+  color: rgb(0, 116, 44);
+  border-radius: 6px;
+  padding: 10px;
+  margin: 15px 0px 15px 0px;
+  font-style: italic;
+  width: 50%;
+}
+
+.errormsg {
+  background-color: rgb(255, 225, 225);
+  border: 1px solid rgb(170, 0, 0);
+  color: rgb(88, 0, 0);
+}
 /* End Form */
 
 /* Image Zoom Effect */

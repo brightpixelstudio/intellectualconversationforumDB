@@ -1,5 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { JsonPipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -24,10 +25,14 @@ import { ApiServiceUser } from '../../services/userservice';
 export class Registration implements OnInit {
   registerForm!: FormGroup;
   recipientEmail = 'brightpixelstudios@gmail.com';
+  showSuccess = false;
+  showError = false;
+  errorMsg = '';
 
   constructor(
     private fb: FormBuilder,
     private apiService: ApiServiceUser,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -55,21 +60,21 @@ export class Registration implements OnInit {
           '',
           [
             Validators.required,
-            Validators.minLength(2), // Native length check
-            //passwordStrengthValidator(), // Custom strength check
+            Validators.minLength(8), // Native length check
+            passwordStrengthValidator(), // Custom strength check
           ],
         ],
         confirmPassword: ['', [Validators.required]],
         profile: new FormControl('', [
           Validators.required,
           Validators.minLength(30),
-          Validators.maxLength(1000),
+          Validators.maxLength(1000),s
           profanityValidator(),
         ]),
       },
       {
         // Apply cross-field validation rules to the whole FormGroup
-        //validators: [confirmPasswordValidator('password', 'confirmPassword')],
+        validators: [confirmPasswordValidator('password', 'confirmPassword')],
       },
     );
   }
@@ -79,13 +84,28 @@ export class Registration implements OnInit {
   }
 
   onSubmit() {
-    if (this.registerForm.valid) {
-      console.log('Form Data:', this.registerForm.value); // Access all values as an object
+    this.showSuccess = false;
+    this.showError = false;
 
+    if (this.registerForm.valid) {
       // Pass the raw form values to your service
       this.apiService.submitRegistrationForm(this.registerForm.value).subscribe({
-        next: (response) => console.log('Success!', response),
-        error: (err) => console.error('Submission failed', err),
+        next: (response) => {
+          this.registerForm.reset();
+          this.showSuccess = true;
+        },
+        error: (error: HttpErrorResponse) => {
+          // Handle Bad Request (400) or other HTTP errors
+          this.showError = true;
+          if (error.status === 400) {
+            // Fallback to error.message if the backend response didn't include a custom text message
+            this.errorMsg =
+              error.error?.message || 'Invalid data submitted. Please check your form.';
+          } else {
+            this.errorMsg = 'An unexpected error occurred. Please try again.';
+          }
+          this.cdr.detectChanges();
+        },
       });
     } else {
       console.log('Form is invalid');

@@ -152,6 +152,13 @@
               <button type="submit" [disabled]="registerForm.invalid" class="btn btn-primary mt-4">
                 Submit Profile
               </button>
+
+              @if (showSuccess == true) {
+                <div class="successmsg">This new member was added.</div>
+              }
+              @if (showError == true) {
+                <div class="errormsg">{{ errorMsg }}.</div>
+              }
             </form>
           </div>
           <div class="col-1"></div>
