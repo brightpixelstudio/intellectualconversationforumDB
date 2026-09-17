@@ -6,10 +6,12 @@ import { GetNewestMembers } from '../../models/getnewestmembers';
 import { GetMostPostsMembers } from '../../models/getmostpostsmembers';
 import { GetLatestLoginsMembers } from '../../models/getlatestloginsmembers';
 import { MemberReportType } from '../../enums/memberreportype';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faTrash, faPencil, faMagnifyingGlassChart } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'members',
-  imports: [DatePipe],
+  imports: [DatePipe, FontAwesomeModule],
   templateUrl: './members.html',
   styleUrl: './members.css',
 })
@@ -20,6 +22,9 @@ export class Members implements OnInit {
   memberListLatestLoginsMembers: GetLatestLoginsMembers[] = [];
   protected MemberReportType = MemberReportType;
   reportType = MemberReportType.All;
+  faTrash = faTrash;
+  faPencil = faPencil;
+  faMagnifyingGlassChart = faMagnifyingGlassChart;
 
   constructor(
     private apiService: ApiServiceUser,
@@ -64,6 +69,13 @@ export class Members implements OnInit {
           this.cdr.detectChanges();
         });
         break;
+    }
+  }
+
+  onDeleteUser(id: number): void {
+    const confirmed = window.confirm('Are you sure you want to delete this member?');
+    if (confirmed) {
+      console.log('Deleting user with ID:', id);
     }
   }
 }

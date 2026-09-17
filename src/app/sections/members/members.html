@@ -37,11 +37,12 @@
                     <th scope="col">Email</th>
                     <th scope="col">Zipcode</th>
                     <th scope="col">Post Count</th>
-                    <th scope="col">Profile</th>
+                    <th style="width: 500px" scope="col">Profile</th>
                     <th scope="col">Last Posted</th>
                     <th scope="col">Last Login</th>
                     <th scope="col">Joined</th>
                     <th scope="col">Blocked</th>
+                    <th scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -63,6 +64,30 @@
                       <td>{{ theMember.datelastlogin | date: 'shortDate' }}</td>
                       <td>{{ theMember.dateadded | date: 'shortDate' }}</td>
                       <td>{{ theMember.blocked }}</td>
+                      <td class="text-nowrap">
+                        <button
+                          type="button"
+                          class="btn actionbtn editBtn"
+                          title="Edit this member"
+                        >
+                          <fa-icon [icon]="faPencil" />
+                        </button>
+                        <button
+                          type="button"
+                          class="btn actionbtn statisticBtn"
+                          title="View this member's statistics"
+                        >
+                          <fa-icon [icon]="faMagnifyingGlassChart" />
+                        </button>
+                        <button
+                          type="button"
+                          class="btn actionbtn deleteBtn"
+                          title="Delete this member"
+                          (click)="onDeleteUser(theMember.userid)"
+                        >
+                          <fa-icon [icon]="faTrash" />
+                        </button>
+                      </td>
                     </tr>
                   }
                 </tbody>
@@ -77,11 +102,12 @@
                     <th scope="col">Email</th>
                     <th scope="col">Zipcode</th>
                     <th scope="col">Post Count</th>
-                    <th scope="col">Profile</th>
+                    <th style="width: 500px" scope="col">Profile</th>
                     <th scope="col">Last Posted</th>
                     <th scope="col">Last Login</th>
                     <th scope="col">Joined</th>
                     <th scope="col">Blocked</th>
+                    <th scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -103,6 +129,7 @@
                       <td>{{ theMember.datelastlogin | date: 'shortDate' }}</td>
                       <td>{{ theMember.dateadded | date: 'shortDate' }}</td>
                       <td>{{ theMember.blocked }}</td>
+                      <td></td>
                     </tr>
                   }
                 </tbody>
@@ -117,11 +144,12 @@
                     <th scope="col">Email</th>
                     <th scope="col">Zipcode</th>
                     <th scope="col">Post Count</th>
-                    <th scope="col">Profile</th>
+                    <th style="width: 500px" scope="col">Profile</th>
                     <th scope="col">Last Posted</th>
                     <th scope="col">Last Login</th>
                     <th scope="col">Joined</th>
                     <th scope="col">Blocked</th>
+                    <th scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -143,6 +171,7 @@
                       <td>{{ theMember.datelastlogin | date: 'shortDate' }}</td>
                       <td>{{ theMember.dateadded | date: 'shortDate' }}</td>
                       <td>{{ theMember.blocked }}</td>
+                      <td></td>
                     </tr>
                   }
                 </tbody>
@@ -157,11 +186,12 @@
                     <th scope="col">Email</th>
                     <th scope="col">Zipcode</th>
                     <th scope="col">Post Count</th>
-                    <th scope="col">Profile</th>
+                    <th style="width: 500px" scope="col">Profile</th>
                     <th scope="col">Last Posted</th>
                     <th scope="col">Last Login</th>
                     <th scope="col">Joined</th>
                     <th scope="col">Blocked</th>
+                    <th scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -183,6 +213,7 @@
                       <td>{{ theMember.datelastlogin | date: 'shortDate' }}</td>
                       <td>{{ theMember.dateadded | date: 'shortDate' }}</td>
                       <td>{{ theMember.blocked }}</td>
+                      <td></td>
                     </tr>
                   }
                 </tbody>

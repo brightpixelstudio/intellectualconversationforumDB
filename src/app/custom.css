@@ -97,6 +97,22 @@ select::placeholder {
   border: 1px solid rgb(170, 0, 0);
   color: rgb(88, 0, 0);
 }
+
+.btn {
+  padding: 5px !important;
+}
+.actionbtn:hover {
+  background-color: transparent !important;
+}
+.editBtn {
+  color: rgb(95, 95, 95);
+}
+.statisticBtn {
+  color: rgb(95, 95, 95);
+}
+.deleteBtn {
+  color: rgb(197, 0, 0);
+}
 /* End Form */
 
 /* Image Zoom Effect */
