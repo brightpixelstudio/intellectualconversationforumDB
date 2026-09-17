@@ -42,12 +42,6 @@ export class ApiServiceUser {
 
   // Accept the raw data value as an argument
   submitRegistrationForm(formData: any): Observable<any> {
-    console.log(formData);
     return this.http.post(this.apiUrl + '/addNewMember', formData);
   }
-
-  // POST request to send data
-  //createWork: Omit<Post, 'id'>): Observable<Work> {
-  //  return this.http.post<Post>(this.apiUrl, post);
-  //}
 }
