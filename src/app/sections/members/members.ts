@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ApiServiceUser } from '../../services/userservice';
 import { GetAllProfileMembers } from '../../models/getallprofilemembers';
 import { GetNewestMembers } from '../../models/getnewestmembers';
@@ -72,10 +73,28 @@ export class Members implements OnInit {
     }
   }
 
+  removeMember<T>(list: T[], condition: (item: T) => boolean): void {
+    const index = list.findIndex(condition);
+    if (index !== -1) {
+      list.splice(index, 1);
+    }
+  }
+
   onDeleteUser(id: number): void {
     const confirmed = window.confirm('Are you sure you want to delete this member?');
     if (confirmed) {
-      console.log('Deleting user with ID:', id);
+      this.apiService.deleteUser(id).subscribe({
+        next: (response) => {
+          // remove the record from all lists (although they might be loaded yet) (no reason to reload)
+          this.removeMember(this.memberListGetAllProfile, (user) => user.userid === id);
+          this.removeMember(this.memberListGetNewestMembers, (user) => user.userid === id);
+          this.removeMember(this.memberListMostPostsMembers, (user) => user.userid === id);
+          this.removeMember(this.memberListLatestLoginsMembers, (user) => user.userid === id);
+        },
+        error: (error) => {
+          window.alert('Error deleting the member');
+        },
+      });
     }
   }
 }

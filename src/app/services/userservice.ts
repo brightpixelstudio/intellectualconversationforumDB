@@ -44,4 +44,8 @@ export class ApiServiceUser {
   submitRegistrationForm(formData: any): Observable<any> {
     return this.http.post(this.apiUrl + '/addNewMember', formData);
   }
+
+  deleteUser(userid: number): Observable<any> {
+    return this.http.delete<any>(this.apiUrl + `/DeleteMember?userid=${userid}`);
+  }
 }
