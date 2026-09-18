@@ -15,7 +15,7 @@ import {
 } from '../../utils/password-validators/password-validators';
 import { profanityValidator } from '../../utils/bad-words-validator';
 import { ApiServiceUser } from '../../services/userservice';
-import { GetProfileMember } from '../../models/getprofilemember';
+import { GetProfileMember } from '../../models/member/getprofilemember';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

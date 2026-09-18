@@ -6,7 +6,7 @@ import { GetAllProfileMembers } from '../models/getallprofilemembers';
 import { GetNewestMembers } from '../models/getnewestmembers';
 import { GetMostPostsMembers } from '../models/getmostpostsmembers';
 import { GetLatestLoginsMembers } from '../models/getlatestloginsmembers';
-import { GetProfileMember } from '../models/getprofilemember';
+import { GetProfileMember } from '../models/member/getprofilemember';
 
 @Injectable({
   providedIn: 'root', // Makes the service a global singleton

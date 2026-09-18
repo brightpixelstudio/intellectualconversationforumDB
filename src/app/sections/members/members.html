@@ -75,7 +75,7 @@
                         <a
                           class="btn actionbtn statisticBtn"
                           title="View this member's statistics"
-                          [attr.href]="'/memberstatisitic?userid=' + theMember.userid"
+                          [attr.href]="'/memberstatistics?userid=' + theMember.userid"
                         >
                           <fa-icon [icon]="faMagnifyingGlassChart" />
                         </a>
@@ -129,7 +129,30 @@
                       <td>{{ theMember.datelastlogin | date: 'shortDate' }}</td>
                       <td>{{ theMember.dateadded | date: 'shortDate' }}</td>
                       <td>{{ theMember.blocked }}</td>
-                      <td></td>
+                      <td class="text-nowrap">
+                        <a
+                          class="btn actionbtn editBtn"
+                          title="Edit this member"
+                          [attr.href]="'/editprofile?userid=' + theMember.userid"
+                        >
+                          <fa-icon [icon]="faPencil" />
+                        </a>
+                        <a
+                          class="btn actionbtn statisticBtn"
+                          title="View this member's statistics"
+                          [attr.href]="'/memberstatistics?userid=' + theMember.userid"
+                        >
+                          <fa-icon [icon]="faMagnifyingGlassChart" />
+                        </a>
+                        <button
+                          type="button"
+                          class="btn actionbtn deleteBtn"
+                          title="Delete this member"
+                          (click)="onDeleteUser(theMember.userid)"
+                        >
+                          <fa-icon [icon]="faTrash" />
+                        </button>
+                      </td>
                     </tr>
                   }
                 </tbody>
@@ -171,7 +194,30 @@
                       <td>{{ theMember.datelastlogin | date: 'shortDate' }}</td>
                       <td>{{ theMember.dateadded | date: 'shortDate' }}</td>
                       <td>{{ theMember.blocked }}</td>
-                      <td></td>
+                      <td class="text-nowrap">
+                        <a
+                          class="btn actionbtn editBtn"
+                          title="Edit this member"
+                          [attr.href]="'/editprofile?userid=' + theMember.userid"
+                        >
+                          <fa-icon [icon]="faPencil" />
+                        </a>
+                        <a
+                          class="btn actionbtn statisticBtn"
+                          title="View this member's statistics"
+                          [attr.href]="'/memberstatistics?userid=' + theMember.userid"
+                        >
+                          <fa-icon [icon]="faMagnifyingGlassChart" />
+                        </a>
+                        <button
+                          type="button"
+                          class="btn actionbtn deleteBtn"
+                          title="Delete this member"
+                          (click)="onDeleteUser(theMember.userid)"
+                        >
+                          <fa-icon [icon]="faTrash" />
+                        </button>
+                      </td>
                     </tr>
                   }
                 </tbody>
@@ -213,7 +259,30 @@
                       <td>{{ theMember.datelastlogin | date: 'shortDate' }}</td>
                       <td>{{ theMember.dateadded | date: 'shortDate' }}</td>
                       <td>{{ theMember.blocked }}</td>
-                      <td></td>
+                      <td class="text-nowrap">
+                        <a
+                          class="btn actionbtn editBtn"
+                          title="Edit this member"
+                          [attr.href]="'/editprofile?userid=' + theMember.userid"
+                        >
+                          <fa-icon [icon]="faPencil" />
+                        </a>
+                        <a
+                          class="btn actionbtn statisticBtn"
+                          title="View this member's statistics"
+                          [attr.href]="'/memberstatistics?userid=' + theMember.userid"
+                        >
+                          <fa-icon [icon]="faMagnifyingGlassChart" />
+                        </a>
+                        <button
+                          type="button"
+                          class="btn actionbtn deleteBtn"
+                          title="Delete this member"
+                          (click)="onDeleteUser(theMember.userid)"
+                        >
+                          <fa-icon [icon]="faTrash" />
+                        </button>
+                      </td>
                     </tr>
                   }
                 </tbody>
