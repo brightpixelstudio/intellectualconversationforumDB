@@ -16,6 +16,7 @@ import {
 import { profanityValidator } from '../../utils/bad-words-validator';
 import { ApiServiceUser } from '../../services/userservice';
 import { GetProfileMember } from '../../models/getprofilemember';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'editprofile',
@@ -25,6 +26,7 @@ import { GetProfileMember } from '../../models/getprofilemember';
 })
 export class EditProfile implements OnInit {
   updateProfileForm!: FormGroup;
+  userId: number = 0;
   showSuccess = false;
   showError = false;
   errorMsg = '';
@@ -33,6 +35,7 @@ export class EditProfile implements OnInit {
     private fb: FormBuilder,
     private apiService: ApiServiceUser,
     private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -79,12 +82,14 @@ export class EditProfile implements OnInit {
     );
 
     // get the query string value
-    const userid = 1;
+    const userId = this.route.snapshot.queryParamMap.get('userid');
+    if (!userId) return;
+    this.userId = +userId;
 
     // load the members profile
-    this.apiService.getUserProfile(userid).subscribe({
+    this.apiService.getUserProfile(this.userId).subscribe({
       next: (GetProfileMember) => {
-        this.updateProfileForm.patchValue(GetProfileMember);
+        this.updateProfileForm.patchValue(GetProfileMember[0]);
       },
       error: (err) => console.error('Failed to load user profile', err),
     });
@@ -95,15 +100,14 @@ export class EditProfile implements OnInit {
   }
 
   onSubmit() {
-    /*
     this.showSuccess = false;
     this.showError = false;
 
-    if (this.registerForm.valid) {
+    if (this.updateProfileForm.valid) {
       // Pass the raw form values to your service
-      this.apiService.submitRegistrationForm(this.registerForm.value).subscribe({
+      this.apiService.submitUpdateProfileForm(this.updateProfileForm.value).subscribe({
         next: (response) => {
-          this.registerForm.reset();
+          this.updateProfileForm.reset();
           this.showSuccess = true;
         },
         error: (error: HttpErrorResponse) => {
@@ -122,6 +126,5 @@ export class EditProfile implements OnInit {
     } else {
       console.log('Form is invalid');
     }
-      */
   }
 }

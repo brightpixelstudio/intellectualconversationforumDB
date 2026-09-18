@@ -37,12 +37,16 @@ export class ApiServiceUser {
 
   // GET request to fetch data
   getUserProfile(userid: number): Observable<GetProfileMember[]> {
-    return this.http.get<GetProfileMember[]>(this.apiUrl + `/getUserProfile?userid=${userid}`);
+    return this.http.get<GetProfileMember[]>(this.apiUrl + `/getProfileMember?userid=${userid}`);
   }
 
   // Accept the raw data value as an argument
   submitRegistrationForm(formData: any): Observable<any> {
     return this.http.post(this.apiUrl + '/addNewMember', formData);
+  }
+
+  submitUpdateProfileForm(formData: any): Observable<any> {
+    return this.http.post(this.apiUrl + '/updateMemberProfile', formData);
   }
 
   deleteUser(userid: number): Observable<any> {
