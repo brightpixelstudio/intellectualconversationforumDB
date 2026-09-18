@@ -45,8 +45,9 @@ export class ApiServiceUser {
     return this.http.post(this.apiUrl + '/addNewMember', formData);
   }
 
-  submitUpdateProfileForm(formData: any): Observable<any> {
-    return this.http.post(this.apiUrl + '/updateMemberProfile', formData);
+  submitUpdateProfileForm(userid: number, formData: any): Observable<any> {
+    console.log(userid);
+    return this.http.post(this.apiUrl + `/updateMemberProfile?userid=${userid}`, formData);
   }
 
   deleteUser(userid: number): Observable<any> {

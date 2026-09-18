@@ -161,6 +161,10 @@
                 Update Profile!
               </button>
 
+              <a class="btn actionbtn editBtn" title="Edit this member" [attr.href]="'/members'">
+                <p class="mt-5 ms-3" style="font-size: 20px">Return To Members</p>
+              </a>
+
               @if (showSuccess == true) {
                 <div class="successmsg">This member was updated.</div>
               }

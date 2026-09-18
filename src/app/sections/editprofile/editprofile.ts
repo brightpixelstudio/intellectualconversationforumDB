@@ -105,9 +105,8 @@ export class EditProfile implements OnInit {
 
     if (this.updateProfileForm.valid) {
       // Pass the raw form values to your service
-      this.apiService.submitUpdateProfileForm(this.updateProfileForm.value).subscribe({
+      this.apiService.submitUpdateProfileForm(this.userId, this.updateProfileForm.value).subscribe({
         next: (response) => {
-          this.updateProfileForm.reset();
           this.showSuccess = true;
         },
         error: (error: HttpErrorResponse) => {

@@ -72,13 +72,13 @@
                         >
                           <fa-icon [icon]="faPencil" />
                         </a>
-                        <button
-                          type="button"
+                        <a
                           class="btn actionbtn statisticBtn"
                           title="View this member's statistics"
+                          [attr.href]="'/memberstatisitic?userid=' + theMember.userid"
                         >
                           <fa-icon [icon]="faMagnifyingGlassChart" />
-                        </button>
+                        </a>
                         <button
                           type="button"
                           class="btn actionbtn deleteBtn"
