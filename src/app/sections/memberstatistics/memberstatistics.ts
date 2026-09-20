@@ -12,10 +12,12 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class MemberStatistics implements OnInit {
   userId: number = 0;
+  getUserStatisticsInformation: any = '';
 
   constructor(
     private apiService: ApiServiceUser,
     private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -24,13 +26,20 @@ export class MemberStatistics implements OnInit {
     if (!userId) return;
     this.userId = +userId;
 
-    /* load the members statistics
-    this.apiService.getUserProfile(this.userId).subscribe({
-      next: (GetProfileMember) => {
-        this.updateProfileForm.patchValue(GetProfileMember[0]);
+    // look at Sunray to call all procedures at once.
+    this.apiService.getUserStatistics(this.userId).subscribe({
+      next: (data) => {
+        // Data maps exactly to the keys defined in forkJoin
+        this.getUserStatisticsInformation = data;
+        console.log(this.getUserStatisticsInformation);
+
+        // load a blog post
+        this.cdr.detectChanges();
       },
-      error: (err) => console.error('Failed to load user profile', err),
+      error: (err) => {
+        this.cdr.detectChanges();
+        console.error('One or more requests failed:', err);
+      },
     });
-    */
   }
 }
