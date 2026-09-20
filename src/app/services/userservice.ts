@@ -52,7 +52,7 @@ export class ApiServiceUser {
     return forkJoin({
       getPostsMember: getPostsMember$,
       getCommentsMember: getCommentsMember$,
-      getPostsWithMostCommentsMember: getPostsWithMostCommentsMember$,
+      // getPostsWithMostCommentsMember: getPostsWithMostCommentsMember$,
     });
   }
 
