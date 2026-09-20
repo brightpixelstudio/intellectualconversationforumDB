@@ -30,6 +30,11 @@ a, a:hover {
 a {
   color: #000
 }
+p.return{
+  font-size: 18px;
+  color: #00b4ab;
+  font-style: italic;
+}
 
 /* Form */
 form {

@@ -1,12 +1,12 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
-import { JsonPipe } from '@angular/common';
+import { JsonPipe, DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiServiceUser } from '../../services/userservice';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'memberstatistics',
-  imports: [],
+  imports: [DatePipe, JsonPipe],
   templateUrl: './memberstatistics.html',
   styleUrl: './memberstatistics.css',
 })

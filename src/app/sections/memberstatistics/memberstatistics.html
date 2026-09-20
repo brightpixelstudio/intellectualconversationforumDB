@@ -62,15 +62,33 @@
                     role="tabpanel"
                     aria-labelledby="tab-0"
                   >
-                    <table class="table table-striped table-hover">
-                      <thead class="custom-thead">
-                        <tr>
-                          <th scope="col">Catagory</th>
-                          <th scope="col">Post Count</th>
-                          <th style="width: 500px" scope="col">Post</th>
-                        </tr>
-                      </thead>
-                    </table>
+                    @if (getUserStatisticsInformation.getPostsMember == 0) {
+                      <p>There are no posts for this member</p>
+                    } @else {
+                      <table class="table table-striped table-hover">
+                        <thead class="custom-thead">
+                          <tr>
+                            <th scope="col">Catagory</th>
+                            <th scope="col">Comment Count</th>
+                            <th style="width: 500px" scope="col">Post</th>
+                            <th scope="col">Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @for (
+                            record of getUserStatisticsInformation.getPostsMember;
+                            track record.postid
+                          ) {
+                            <tr>
+                              <td>{{ record.catagory }}</td>
+                              <td>{{ record.count }}</td>
+                              <td>{{ record.shorttext }}</td>
+                              <td>{{ record.dateadded | date: 'mediumDate' }}</td>
+                            </tr>
+                          }
+                        </tbody>
+                      </table>
+                    }
                   </div>
                   <div
                     class="tab-pane"
@@ -89,6 +107,13 @@
                     Tab 3 selected
                   </div>
                 </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <a class="btn actionbtn editBtn" title="Edit this member" [attr.href]="'/members'">
+                  <p class="return">Return To Members</p>
+                </a>
               </div>
             </div>
           </div>
