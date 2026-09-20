@@ -26,7 +26,7 @@ export class MemberStatistics implements OnInit {
     if (!userId) return;
     this.userId = +userId;
 
-    this.userId = 5; // testing
+    // this.userId = 5; // testing
 
     // look at Sunray to call all procedures at once.
     this.apiService.getUserStatistics(this.userId).subscribe({
