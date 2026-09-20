@@ -96,7 +96,33 @@
                     role="tabpanel"
                     aria-labelledby="tab-1"
                   >
-                    Tab 2 selected
+                    @if (getUserStatisticsInformation.getCommentsMember == 0) {
+                      <p>There are no comments for this member</p>
+                    } @else {
+                      <table class="table table-striped table-hover">
+                        <thead class="custom-thead">
+                          <tr>
+                            <th scope="col">Catagory</th>
+                            <th scope="col">Post</th>
+                            <th style="width: 500px" scope="col">Comment</th>
+                            <th scope="col">Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @for (
+                            record of getUserStatisticsInformation.getCommentsMember;
+                            track record.postid
+                          ) {
+                            <tr>
+                              <td>{{ record.catagory }}</td>
+                              <td>{{ record.postshorttext }}</td>
+                              <td>{{ record.commentshorttext }}</td>
+                              <td>{{ record.dateadded | date: 'mediumDate' }}</td>
+                            </tr>
+                          }
+                        </tbody>
+                      </table>
+                    }
                   </div>
                   <div
                     class="tab-pane"
