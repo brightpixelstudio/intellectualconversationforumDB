@@ -18,5 +18,6 @@ export class MenuComponent {
   menuItems: MenuItem[] = [
     { label: 'Registration', link: '/' },
     { label: 'Members', link: '/members' },
+    { label: 'Statistics', link: '/statistics' },
   ];
 }
