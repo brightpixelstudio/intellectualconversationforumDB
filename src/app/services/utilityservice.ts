@@ -12,7 +12,7 @@ export class ApiServiceUtility {
   private apiUrl = 'https://localhost:7043/utility'; // LOCAL ONLY
 
   // GET request to fetch data
-  getNewestMembers(): Observable<GetCatagoryList[]> {
+  getCatagoryList(): Observable<GetCatagoryList[]> {
     return this.http.get<GetCatagoryList[]>(this.apiUrl + '/GetCatagoryList');
   }
 }

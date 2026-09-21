@@ -42,7 +42,7 @@ export class ApiServiceUser {
   }
 
   // GET request to fetch data
-  getUserList(userid: number): Observable<GetUserList[]> {
+  getUserList(): Observable<GetUserList[]> {
     return this.http.get<GetUserList[]>(this.apiUrl + '/getUserList');
   }
 
