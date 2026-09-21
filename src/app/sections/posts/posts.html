@@ -19,9 +19,15 @@
               <div class="col-12">
                 <select #catagory name="catagory" id="catagory" class="me-2">
                   <option value="all">All Catagories</option>
+                  @for (catagory of catagoryList; track catagory.postcatagoryid) {
+                    <option [value]="catagory.postcatagoryid">{{ catagory.catagory }}</option>
+                  }
                 </select>
                 <select #user name="user" id="user">
                   <option value="all">All Users</option>
+                  @for (user of userList; track user.userid) {
+                    <option [value]="user.userid">{{ user.name }}</option>
+                  }
                 </select>
               </div>
             </div>
