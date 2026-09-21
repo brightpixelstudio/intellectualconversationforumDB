@@ -19,5 +19,6 @@ export class MenuComponent {
     { label: 'Registration', link: '/' },
     { label: 'Members', link: '/members' },
     { label: 'Statistics', link: '/statistics' },
+    { label: 'Posts', link: '/posts' },
   ];
 }
