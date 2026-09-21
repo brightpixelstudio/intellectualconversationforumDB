@@ -55,14 +55,32 @@
                     >
                   </li>
                 </ul>
-                <div class="tab-content pt-5" id="tab-content">
+                <div class="tab-content pt-3" id="tab-content">
                   <div
                     class="tab-pane active"
                     id="simple-tabpanel-0"
                     role="tabpanel"
                     aria-labelledby="tab-0"
                   >
-                    Content 1
+                    <table class="table table-striped table-hover">
+                      <thead class="custom-thead">
+                        <tr>
+                          <th scope="col">Catagory</th>
+                          <th scope="col">Post Count</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (
+                          theStat of getStatisticsInformation.getMostPopularCatagories;
+                          track theStat.postcatagoryid
+                        ) {
+                          <tr>
+                            <td>{{ theStat.catagory }}</td>
+                            <td>{{ theStat.count }}</td>
+                          </tr>
+                        }
+                      </tbody>
+                    </table>
                   </div>
                   <div
                     class="tab-pane"
@@ -70,7 +88,37 @@
                     role="tabpanel"
                     aria-labelledby="tab-1"
                   >
-                    Content 2
+                    <table class="table table-striped table-hover">
+                      <thead class="custom-thead">
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Username</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Zipcode</th>
+                          <th style="width: 500px" scope="col">Profile</th>
+                          <th scope="col">Join Date</th>
+                          <th scope="col">Last Login</th>
+                          <th scope="col">Post Count</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (
+                          theStat of getStatisticsInformation.getMostPostsMembers;
+                          track theStat.userid
+                        ) {
+                          <tr>
+                            <td>{{ theStat.name }}</td>
+                            <td>{{ theStat.username }}</td>
+                            <td>{{ theStat.email }}</td>
+                            <td>{{ theStat.zipcode }}</td>
+                            <td>{{ theStat.profile }}</td>
+                            <td>{{ theStat.dateadded | date: 'shortDate' }}</td>
+                            <td>{{ theStat.datelastlogin | date: 'shortDate' }}</td>
+                            <td>{{ theStat.count }}</td>
+                          </tr>
+                        }
+                      </tbody>
+                    </table>
                   </div>
                   <div
                     class="tab-pane"
@@ -78,7 +126,27 @@
                     role="tabpanel"
                     aria-labelledby="tab-2"
                   >
-                    Content 3
+                    <table class="table table-striped table-hover">
+                      <thead class="custom-thead">
+                        <tr>
+                          <th scope="col">Catagory</th>
+                          <th scope="col">Post</th>
+                          <th scope="col">Comment Count</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (
+                          theStat of getStatisticsInformation.getMostPopularPostWithComments;
+                          track theStat.postid
+                        ) {
+                          <tr>
+                            <td>{{ theStat.catagory }}</td>
+                            <td>{{ theStat.shorttextpost }}</td>
+                            <td>{{ theStat.count }}</td>
+                          </tr>
+                        }
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>

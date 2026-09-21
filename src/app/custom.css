@@ -43,6 +43,10 @@ p.return{
   /* Default non-active text color */
   border: 1px solid rgb(185, 185, 185);
 }
+.custom-thead th {
+  background-color: #707070 !important;
+  color: white !important;
+}
 
 /* Hover State */
 .nav-tabs .nav-link:hover {
