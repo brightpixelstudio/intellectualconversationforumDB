@@ -14,8 +14,9 @@ import { GetPostsByCategoryUser } from '../../models/member/getpostsbycategoryus
   styleUrl: './posts.css',
 })
 export class Posts implements OnInit {
-  userid: number | undefined;
-  catagoryid: number | undefined;
+  noPosts: boolean = true;
+  userid: number | null = null;
+  catagoryid: number | null = null;
   userList!: any[];
   catagoryList!: any[];
   postsList: GetPostsByCategoryUser[] = [];
@@ -35,19 +36,35 @@ export class Posts implements OnInit {
       next: (response) => {
         this.userList = response.users;
         this.catagoryList = response.catagories;
+        this.cdr.detectChanges();
 
-        this.getPosts();
+        this.loadPosts();
       },
       error: (err) => console.error('One of the requests failed!', err),
     });
   }
 
-  getPosts() {
-    this.apiServicePost
-      .getPosts(this.catagoryid, this.userid)
-      .subscribe((data: GetPostsByCategoryUser[]) => {
+  loadPosts() {
+    this.noPosts = true;
+    this.apiServicePost.getPosts(this.catagoryid, this.userid).subscribe({
+      next: (data) => {
         this.postsList = data;
+        this.noPosts = false;
         this.cdr.detectChanges();
-      });
+      },
+      error: (err) => {
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
+  onCatagoryChange(catagory: string) {
+    this.catagoryid = +catagory;
+    this.loadPosts();
+  }
+
+  onUserChange(user: string) {
+    this.userid = +user;
+    this.loadPosts();
   }
 }

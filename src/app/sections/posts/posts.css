@@ -1,0 +1,22 @@
+p.posttitle{
+  font-size: 18px;
+  color: rgb(0, 129, 250);
+  padding-bottom: 10px;
+  margin-bottom: 0px;
+  line-height: 10px;
+}
+
+p.post {
+  font-size: 16px;
+  line-height: 24px;
+  margin-bottom: 0px;
+}
+
+.commentsbtn{
+  font-size: 14px !important;
+  background-color: rgb(3, 85, 207);
+}
+
+hr {
+  margin-bottom: 30px;
+}
