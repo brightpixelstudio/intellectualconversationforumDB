@@ -48,10 +48,14 @@
                 @if (!noPosts) {
                   @for (thePost of postsList; track thePost.postid; let i = $index) {
                     <div class="row">
-                      <div class="col-4">
+                      <div class="col-12">
                         <p class="posttitle">
                           <strong>{{ thePost.name }}</strong
-                          >, {{ thePost.catagory }}, {{ thePost.dateadded | date: 'mediumDate' }}
+                          >,
+                          <span class="posttitleinfo"
+                            >{{ thePost.catagory }}, {{ thePost.dateadded | date: 'mediumDate' }},
+                            {{ getTimePassed(thePost.dateadded) }}</span
+                          >
                         </p>
                       </div>
                     </div>

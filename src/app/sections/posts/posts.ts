@@ -5,7 +5,7 @@ import { ApiServiceUser } from '../../services/userservice';
 import { ApiServiceUtility } from '../../services/utilityservice';
 import { ApiServicePost } from '../../services/postservice';
 import { forkJoin } from 'rxjs';
-import { GetPostsByCategoryUser } from '../../models/member/getpostsbycategoryuser';
+import { GetPostsByCategoryUser } from '../../models/posts/getpostsbycategoryuser';
 
 @Component({
   selector: 'posts',
@@ -45,7 +45,6 @@ export class Posts implements OnInit {
   }
 
   loadPosts() {
-    this.noPosts = true;
     this.apiServicePost.getPosts(this.catagoryid, this.userid).subscribe({
       next: (data) => {
         this.postsList = data;
@@ -53,11 +52,13 @@ export class Posts implements OnInit {
         this.cdr.detectChanges();
       },
       error: (err) => {
+        this.noPosts = true;
         this.cdr.detectChanges();
       },
     });
   }
 
+  // events
   onCatagoryChange(catagory: string) {
     this.catagoryid = +catagory;
     this.loadPosts();
@@ -66,5 +67,27 @@ export class Posts implements OnInit {
   onUserChange(user: string) {
     this.userid = +user;
     this.loadPosts();
+  }
+
+  // helpers
+  getTimePassed(postDate: Date): string {
+    const currentDate: Date = new Date();
+    const newPostDate: Date = new Date(postDate);
+
+    const diffInSeconds = Math.abs(newPostDate.getTime() - currentDate.getTime()) / 1000;
+
+    const days = Math.floor(diffInSeconds / (60 * 60 * 24));
+    const hours = Math.floor((diffInSeconds / (60 * 60)) % 24);
+    const minutes = Math.floor((diffInSeconds / 60) % 60);
+
+    let posted: string = `Posted `;
+    if (days > 0) {
+      posted += `${days} days, ${hours} hours, ${minutes} minutes ago`;
+    } else if (hours > 0) {
+      posted += `${hours} hours, ${minutes} minutes ago`;
+    } else {
+      posted += `${minutes} minutes ago`;
+    }
+    return posted;
   }
 }
