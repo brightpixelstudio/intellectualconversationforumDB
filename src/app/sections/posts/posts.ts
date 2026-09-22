@@ -14,7 +14,7 @@ import { GetPostsByCategoryUser } from '../../models/posts/getpostsbycategoryuse
   styleUrl: './posts.css',
 })
 export class Posts implements OnInit {
-  noPosts: boolean = true;
+  noPosts: boolean = false;
   userid: number | null = null;
   catagoryid: number | null = null;
   userList!: any[];

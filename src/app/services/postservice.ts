@@ -33,4 +33,8 @@ export class ApiServicePost {
       this.apiUrl + '/getPostsByCategoryUser?' + queryString,
     );
   }
+
+  submitNewPostForm(formData: any): Observable<any> {
+    return this.http.post(this.apiUrl + '/addPost', formData);
+  }
 }

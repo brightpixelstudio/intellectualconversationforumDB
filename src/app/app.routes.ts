@@ -5,6 +5,7 @@ import { EditProfilePage } from './pages/editprofile/editprofilepage';
 import { MemberStatisticsPage } from './pages/memberstatistics/memberstatistics';
 import { StatisticsPage } from './pages/statistics/statisticspage';
 import { PostsPage } from './pages/posts/postspage';
+import { NewPostPage } from './pages/newpost/newpostpage';
 
 export const routes: Routes = [
   { path: '', component: Home, title: 'Registration' },
@@ -13,4 +14,5 @@ export const routes: Routes = [
   { path: 'memberstatistics', component: MemberStatisticsPage, title: 'View Member Statistics' },
   { path: 'statistics', component: StatisticsPage, title: 'View Statistics' },
   { path: 'posts', component: PostsPage, title: 'Posts' },
+  { path: 'newpost', component: NewPostPage, title: 'NewPost' },
 ];
