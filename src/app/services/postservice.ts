@@ -37,4 +37,8 @@ export class ApiServicePost {
   submitNewPostForm(formData: any): Observable<any> {
     return this.http.post(this.apiUrl + '/addPost', formData);
   }
+
+  submitNewCommentForm(postid: number, userid: number, formData: any): Observable<any> {
+    return this.http.post(this.apiUrl + `/addComment?postid=${postid}&userid=${userid}`, formData);
+  }
 }
