@@ -3,7 +3,9 @@ import { DatePipe } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ApiServiceUser } from '../../services/userservice';
 import { ApiServiceUtility } from '../../services/utilityservice';
+import { ApiServicePost } from '../../services/postservice';
 import { forkJoin } from 'rxjs';
+import { GetPostsByCategoryUser } from '../../models/member/getpostsbycategoryuser';
 
 @Component({
   selector: 'posts',
@@ -12,14 +14,17 @@ import { forkJoin } from 'rxjs';
   styleUrl: './posts.css',
 })
 export class Posts implements OnInit {
-  userid: number | null = null;
-  catagoryid: number | null = null;
+  userid: number | undefined;
+  catagoryid: number | undefined;
   userList!: any[];
   catagoryList!: any[];
+  postsList: GetPostsByCategoryUser[] = [];
 
   constructor(
     private apiServiceUser: ApiServiceUser,
     private apiServiceUtilities: ApiServiceUtility,
+    private apiServicePost: ApiServicePost,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -30,17 +35,19 @@ export class Posts implements OnInit {
       next: (response) => {
         this.userList = response.users;
         this.catagoryList = response.catagories;
-        console.log(this.userList);
-        console.log(this.catagoryList);
 
-        // get the posts.  Nothing is selected yet
         this.getPosts();
       },
       error: (err) => console.error('One of the requests failed!', err),
     });
-
-    //    this.onMemberTypeChange('all');
   }
 
-  getPosts() {}
+  getPosts() {
+    this.apiServicePost
+      .getPosts(this.catagoryid, this.userid)
+      .subscribe((data: GetPostsByCategoryUser[]) => {
+        this.postsList = data;
+        this.cdr.detectChanges();
+      });
+  }
 }
