@@ -23,8 +23,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './newpost.css',
 })
 export class NewPost implements OnInit {
-  userid: number | null = null;
-  catagoryid: number | null = null;
   userList!: any[];
   catagoryList!: any[];
   postForm!: FormGroup;
@@ -43,6 +41,8 @@ export class NewPost implements OnInit {
 
   ngOnInit(): void {
     this.postForm = this.fb.group({
+      catagoryid: new FormControl('', [Validators.required]),
+      userid: new FormControl('', [Validators.required]),
       post: new FormControl('', [
         Validators.required,
         Validators.maxLength(5000),
@@ -57,11 +57,6 @@ export class NewPost implements OnInit {
       next: (response) => {
         this.userList = response.users;
         this.catagoryList = response.catagories;
-
-        // set defaults
-        //this.userid = 3;
-        //this.catagoryid = 5;
-
         this.cdr.detectChanges();
       },
       error: (err) => console.error('One of the requests failed!', err),
@@ -76,9 +71,6 @@ export class NewPost implements OnInit {
     this.showSuccess = false;
     this.showError = false;
 
-    console.log(this.postForm.value);
-
-    /*
     if (this.postForm.valid) {
       // Pass the raw form values to your service
       this.apiServicePost.submitNewPostForm(this.postForm.value).subscribe({
@@ -102,6 +94,5 @@ export class NewPost implements OnInit {
     } else {
       console.log('Form is invalid');
     }
-      */
   }
 }

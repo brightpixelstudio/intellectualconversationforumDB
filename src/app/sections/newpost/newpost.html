@@ -8,12 +8,18 @@
             <h3 class="pb-3">Create Post</h3>
             <p>Create a new post below:</p>
             <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
-              <select #catagory name="catagory" id="catagory" class="me-2">
+              <select
+                #catagory
+                name="catagory"
+                id="catagory"
+                class="me-2"
+                formControlName="catagoryid"
+              >
                 @for (catagory of catagoryList; track catagory.postcatagoryid) {
                   <option [value]="catagory.postcatagoryid">{{ catagory.catagory }}</option>
                 }
               </select>
-              <select #user name="user" id="user">
+              <select #user name="user" id="user" formControlName="userid">
                 @for (user of userList; track user.userid) {
                   <option [value]="user.userid">{{ user.name }}</option>
                 }
