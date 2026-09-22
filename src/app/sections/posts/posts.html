@@ -18,13 +18,13 @@
             <div class="row">
               <div class="col-12">
                 <select #catagory name="catagory" id="catagory" class="me-2">
-                  <option value="all">All Catagories</option>
+                  <option value="0">All Catagories</option>
                   @for (catagory of catagoryList; track catagory.postcatagoryid) {
                     <option [value]="catagory.postcatagoryid">{{ catagory.catagory }}</option>
                   }
                 </select>
                 <select #user name="user" id="user">
-                  <option value="all">All Users</option>
+                  <option value="0">All Users</option>
                   @for (user of userList; track user.userid) {
                     <option [value]="user.userid">{{ user.name }}</option>
                   }
