@@ -17,7 +17,8 @@ export class ApiServicePost {
     useridparam: number | undefined,
   ): Observable<GetPostsByCategoryUser[]> {
     return this.http.get<GetPostsByCategoryUser[]>(
-      this.apiUrl + `/hetPostsByCategoryUser?catagoryid=${catagoryidparam}&userid=${useridparam}`,
+      this.apiUrl +
+        `/hetPostsByCategoryUser?postcatagoryId=${catagoryidparam}&userid=${useridparam}`,
     );
   }
 }
