@@ -16,15 +16,19 @@ p {
   margin-bottom: 0px;
 }
 
-.commentsbtn{
-  font-size: 14px !important;
-  background-color: rgb(3, 85, 207);
-}
-
 .newpostbtn{
   font-size: 20px !important;
   padding: 12px 13px 14px 13px !important;
   margin-top: -10px !important;
+}
+
+.commentsbtn, .deletebtn, .commentsbtn{
+  font-size: 16px !important;
+  padding:6px 13px 6px 13px;
+}
+
+.commentsbtn {
+  background-color: rgb(3, 85, 207);
 }
 
 hr {

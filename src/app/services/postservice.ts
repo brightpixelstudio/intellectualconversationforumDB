@@ -46,4 +46,12 @@ export class ApiServicePost {
   getComments(postid: number): Observable<GetPostComments[]> {
     return this.http.get<GetPostComments[]>(this.apiUrl + `/GetPostComments?postid=${postid}`);
   }
+
+  deletePost(postid: number): Observable<any> {
+    return this.http.delete<any>(this.apiUrl + `/DeletePost?postid=${postid}`);
+  }
+
+  deleteComment(commentid: number): Observable<any> {
+    return this.http.delete<any>(this.apiUrl + `/DeleteComment?commentid=${commentid}`);
+  }
 }

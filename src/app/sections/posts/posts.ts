@@ -23,6 +23,7 @@ import { GetPostComments } from '../../models/posts/getpostcomments';
 })
 export class Posts implements OnInit {
   noPosts: boolean = false;
+  postId: number = 0;
   userid: number | null = null;
   catagoryid: number | null = null;
   userList!: any[];
@@ -88,10 +89,12 @@ export class Posts implements OnInit {
     const post = this.postsList.find((post) => post.postid === +postId);
 
     if (post) {
+      this.postId = +postId;
       // get the comments
       this.apiServicePost.getComments(+postId).subscribe({
         next: (data: GetPostComments[]) => {
-          this.commentList = data;
+          // we add to the comment list in case they want to delete one.
+          this.commentList = [...this.commentList, ...data];
           let comments = this.buildCommemts();
 
           // set the comments
@@ -104,24 +107,78 @@ export class Posts implements OnInit {
     }
   }
 
+  onDeletePostClick(postId: number) {
+    const confirmed = window.confirm('Are you sure you want to delete this post?');
+    if (confirmed) {
+      this.apiServicePost.deletePost(postId).subscribe({
+        next: (response) => {
+          // remove the record from the lists
+          this.removeItem(this.postsList, (post) => post.postid === postId);
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          window.alert('Error deleting this post');
+        },
+      });
+    }
+  }
+
+  onDeleteCommentClick(event: MouseEvent) {
+    // remove the record from the list
+    const target = event.target as HTMLElement;
+
+    // Check if the clicked element or its parent matches your target class
+    if (target && target.classList.contains('dynamic-btn')) {
+      // look for the comments class
+      let themeClass = Array.from(target.classList).find((className) =>
+        className.startsWith('comment-'),
+      );
+      if (!themeClass) return;
+
+      // get the id and remove it
+      const commentId: number = +themeClass.substring(themeClass.indexOf('-') + 1);
+
+      this.apiServicePost.deleteComment(commentId).subscribe({
+        next: (response) => {
+          // reload the comments for this post
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          window.alert('Error deleting this post');
+        },
+      });
+    }
+  }
+
   // helpers
+  removeItem<T>(list: T[], condition: (item: T) => boolean): void {
+    const index = list.findIndex(condition);
+    if (index !== -1) {
+      list.splice(index, 1);
+    }
+  }
+
   buildCommemts(): string {
     // build the content
     let comments: string = '';
     for (const comment of this.commentList) {
+      if (this.postId != comment.postid) continue;
+
       // title
       const newDate = new Date(comment.dateadded);
       const timePassed = this.getTimePassed(newDate);
       const mediumDate = this.mediumDateFormatter.format(newDate);
       let title = `<p class='comment' ><strong>${comment.name}</strong>, <span class="posttitleinfo">${mediumDate}, ${timePassed}</span></p>`;
 
+      // delete button
+      let deletebtn = `<div><a class='btn btn-danger dynamic-btn deletecommentbtn mt-2 comment-${comment.postcommentid}'>Delete</a></div>`;
+
       // comment
-      const theComment = comment.comment + '<hr/>';
+      let theComment = comment.comment + deletebtn + '<hr/>';
 
       // add to the comments
       comments += title + theComment;
     }
-    console.log(comments);
     return comments;
   }
 

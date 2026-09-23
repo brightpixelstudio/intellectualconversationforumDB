@@ -71,6 +71,7 @@
                     </div>
                     <div class="row">
                       <div
+                        (click)="onDeleteCommentClick($event)"
                         class="col-12"
                         #comments{{
                         thePost.postid
@@ -82,8 +83,8 @@
                     <div class="row">
                       <div class="col-12">
                         <a
-                          class="btn btn-primary commentsbtn mt-3"
-                          title="Add a New Comment"
+                          class="btn btn-primary mt-3"
+                          title="Delete Post"
                           [attr.href]="'/newcomment?postid=' + thePost.postid"
                         >
                           Add Comment
@@ -99,6 +100,13 @@
                             </button>
                           }
                         }
+                        <button
+                          class="btn btn-danger deletebtn mt-3 ms-1"
+                          id="button{{ thePost.postid }}"
+                          (click)="onDeletePostClick(thePost.postid)"
+                        >
+                          Delete This Post
+                        </button>
                       </div>
                     </div>
                     <div class="row">
