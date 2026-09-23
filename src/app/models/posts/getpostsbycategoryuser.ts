@@ -8,4 +8,5 @@ export interface GetPostsByCategoryUser {
   dateadded: Date;
   count: number;
   post: string;
+  comments: string;
 }

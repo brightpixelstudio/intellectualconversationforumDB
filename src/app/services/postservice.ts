@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
 import { GetPostsByCategoryUser } from '../models/posts/getpostsbycategoryuser';
+import { GetPostComments } from '../models/posts/getpostcomments';
 
 @Injectable({
   providedIn: 'root', // Makes the service a global singleton
@@ -40,5 +41,9 @@ export class ApiServicePost {
 
   submitNewCommentForm(postid: number, formData: any): Observable<any> {
     return this.http.post(this.apiUrl + `/addComment?postid=${postid}`, formData);
+  }
+
+  getComments(postid: number): Observable<GetPostComments[]> {
+    return this.http.get<GetPostComments[]>(this.apiUrl + `/GetPostComments?postid=${postid}`);
   }
 }

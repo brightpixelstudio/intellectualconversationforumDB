@@ -1,4 +1,11 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  ElementRef,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ApiServiceUser } from '../../services/userservice';
@@ -6,6 +13,7 @@ import { ApiServiceUtility } from '../../services/utilityservice';
 import { ApiServicePost } from '../../services/postservice';
 import { forkJoin } from 'rxjs';
 import { GetPostsByCategoryUser } from '../../models/posts/getpostsbycategoryuser';
+import { GetPostComments } from '../../models/posts/getpostcomments';
 
 @Component({
   selector: 'posts',
@@ -19,13 +27,16 @@ export class Posts implements OnInit {
   catagoryid: number | null = null;
   userList!: any[];
   catagoryList!: any[];
+  hiddenButtonIds = new Set<string>();
   postsList: GetPostsByCategoryUser[] = [];
+  commentList: GetPostComments[] = [];
 
   constructor(
     private apiServiceUser: ApiServiceUser,
     private apiServiceUtilities: ApiServiceUtility,
     private apiServicePost: ApiServicePost,
     private cdr: ChangeDetectorRef,
+    private renderer: Renderer2,
   ) {}
 
   ngOnInit(): void {
@@ -46,7 +57,7 @@ export class Posts implements OnInit {
 
   loadPosts() {
     this.apiServicePost.getPosts(this.catagoryid, this.userid).subscribe({
-      next: (data) => {
+      next: (data: GetPostsByCategoryUser[]) => {
         this.postsList = data;
         this.noPosts = false;
         this.cdr.detectChanges();
@@ -69,7 +80,55 @@ export class Posts implements OnInit {
     this.loadPosts();
   }
 
+  onCommentsClick(postId: string) {
+    // add to the hide button list
+    this.hiddenButtonIds.add(postId);
+
+    // get the element from the list
+    const post = this.postsList.find((post) => post.postid === +postId);
+
+    if (post) {
+      // get the comments
+      this.apiServicePost.getComments(+postId).subscribe({
+        next: (data: GetPostComments[]) => {
+          this.commentList = data;
+          let comments = this.buildCommemts();
+
+          // set the comments
+          let content = `<div class="row mt-3 ms-4"><div class="col-11">${comments}</div></row>`;
+          post.comments = content;
+          this.cdr.detectChanges();
+        },
+        error: (_err: unknown) => {},
+      });
+    }
+  }
+
   // helpers
+  buildCommemts(): string {
+    // build the content
+    let comments: string = '';
+    for (const comment of this.commentList) {
+      // title
+      const newDate = new Date(comment.dateadded);
+      const timePassed = this.getTimePassed(newDate);
+      const mediumDate = this.mediumDateFormatter.format(newDate);
+      let title = `<p class='comment' ><strong>${comment.name}</strong>, <span class="posttitleinfo">${mediumDate}, ${timePassed}</span></p>`;
+
+      // comment
+      const theComment = comment.comment + '<hr/>';
+
+      // add to the comments
+      comments += title + theComment;
+    }
+    console.log(comments);
+    return comments;
+  }
+
+  mediumDateFormatter = new Intl.DateTimeFormat('en-US', {
+    dateStyle: 'medium',
+  });
+
   getTimePassed(postDate: Date): string {
     const currentDate: Date = new Date();
     const newPostDate: Date = new Date(postDate);
