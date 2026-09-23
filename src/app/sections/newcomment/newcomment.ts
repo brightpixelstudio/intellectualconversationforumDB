@@ -22,9 +22,7 @@ import { forkJoin } from 'rxjs';
 })
 export class NewComment implements OnInit {
   userList!: any[];
-  // TODO
-  postId: number = 1;
-  userId: number = 1;
+  postId: number = 0;
 
   commentForm!: FormGroup;
   showSuccess = false;
@@ -75,27 +73,24 @@ export class NewComment implements OnInit {
 
     if (this.commentForm.valid) {
       // Pass the raw form values to your service
-      this.userId = 0;
-      this.apiServicePost
-        .submitNewCommentForm(this.postId, this.userId, this.commentForm.value)
-        .subscribe({
-          next: (response) => {
-            this.commentForm.reset();
-            this.showSuccess = true;
-          },
-          error: (error: HttpErrorResponse) => {
-            // Handle Bad Request (400) or other HTTP errors
-            this.showError = true;
-            if (error.status === 400) {
-              // Fallback to error.message if the backend response didn't include a custom text message
-              this.errorMsg =
-                error.error?.message || 'Invalid data submitted. Please check your form.';
-            } else {
-              this.errorMsg = 'An unexpected error occurred. Please try again.';
-            }
-            this.cdr.detectChanges();
-          },
-        });
+      this.apiServicePost.submitNewCommentForm(this.postId, this.commentForm.value).subscribe({
+        next: (response) => {
+          this.commentForm.reset();
+          this.showSuccess = true;
+        },
+        error: (error: HttpErrorResponse) => {
+          // Handle Bad Request (400) or other HTTP errors
+          this.showError = true;
+          if (error.status === 400) {
+            // Fallback to error.message if the backend response didn't include a custom text message
+            this.errorMsg =
+              error.error?.message || 'Invalid data submitted. Please check your form.';
+          } else {
+            this.errorMsg = 'An unexpected error occurred. Please try again.';
+          }
+          this.cdr.detectChanges();
+        },
+      });
     } else {
       console.log('Form is invalid');
     }
