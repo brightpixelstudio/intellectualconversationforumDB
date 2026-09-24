@@ -83,8 +83,15 @@
                     <div class="row">
                       <div class="col-12">
                         <a
+                          class="btn btn-primary mt-3 me-1"
+                          title="Edit Post"
+                          [attr.href]="'/editpost?postid=' + thePost.postid"
+                        >
+                          Edit Post
+                        </a>
+                        <a
                           class="btn btn-primary mt-3"
-                          title="Delete Post"
+                          title="Add Comment"
                           [attr.href]="'/newcomment?postid=' + thePost.postid"
                         >
                           Add Comment

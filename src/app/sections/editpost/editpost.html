@@ -1,0 +1,70 @@
+<div class="row content-container">
+  <div class="col-12">
+    <div class="row">
+      <div class="content-container col-12 pb-4">
+        <div class="row pt-4">
+          <div class="col-1"></div>
+          <div class="col-10">
+            <h3 class="pb-3">Edit Post</h3>
+            <p>Edit the post below:</p>
+            <form [formGroup]="updatePostForm" (ngSubmit)="onSubmit()">
+              <select
+                #catagory
+                name="catagory"
+                id="catagory"
+                class="me-2"
+                formControlName="catagoryid"
+              >
+                @for (catagory of catagoryList; track catagory.postcatagoryid) {
+                  <option [value]="catagory.postcatagoryid">{{ catagory.catagory }}</option>
+                }
+              </select>
+              <select #user name="user" id="user" formControlName="userid">
+                @for (user of userList; track user.userid) {
+                  <option [value]="user.userid">{{ user.name }}</option>
+                }
+              </select>
+              <textarea
+                type="text"
+                id="post"
+                rows="10"
+                maxlength="5000"
+                required
+                formControlName="post"
+                placeholder="Post..."
+                class="form-control"
+              ></textarea>
+              @if (f['post'].touched && f['post'].errors) {
+                <div class="error-message">Please provide a Post less than 5000 characters.</div>
+              }
+              @if (f['post'].touched && f['post'].errors?.['profanity']) {
+                <div class="error-message">Please remove inappropriate language.</div>
+              }
+
+              <!-- Disable submit button if form rules aren't met -->
+              <button
+                type="submit"
+                [disabled]="updatePostForm.invalid"
+                class="btn btn-primary mt-4"
+              >
+                Update Post!
+              </button>
+
+              <a class="btn actionbtn editBtn" title="Return to Posts" [attr.href]="'/posts'">
+                <p class="return mt-5 ms-3">Return To Posts</p>
+              </a>
+
+              @if (showSuccess == true) {
+                <div class="successmsg">This post was updated.</div>
+              }
+              @if (showError == true) {
+                <div class="errormsg">{{ errorMsg }}.</div>
+              }
+            </form>
+          </div>
+          <div class="col-1"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

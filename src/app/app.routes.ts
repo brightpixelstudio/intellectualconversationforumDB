@@ -7,6 +7,7 @@ import { StatisticsPage } from './pages/statistics/statisticspage';
 import { PostsPage } from './pages/posts/postspage';
 import { NewPostPage } from './pages/newpost/newpostpage';
 import { NewCommentPage } from './pages/newcomment/newcommentpage';
+import { EditPostPage } from './pages/editpost/editpostpage';
 
 export const routes: Routes = [
   { path: '', component: Home, title: 'Registration' },
@@ -17,4 +18,5 @@ export const routes: Routes = [
   { path: 'posts', component: PostsPage, title: 'Posts' },
   { path: 'newpost', component: NewPostPage, title: 'New Post' },
   { path: 'newcomment', component: NewCommentPage, title: 'New Comment' },
+  { path: 'editpost', component: EditPostPage, title: 'Edit Post' },
 ];

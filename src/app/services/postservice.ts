@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
 import { GetPostsByCategoryUser } from '../models/posts/getpostsbycategoryuser';
+import { GetPost } from '../models/posts/getpost';
 import { GetPostComments } from '../models/posts/getpostcomments';
 
 @Injectable({
@@ -35,6 +36,11 @@ export class ApiServicePost {
     );
   }
 
+  // GET request to fetch data
+  getPost(postid: number): Observable<GetPost[]> {
+    return this.http.get<GetPost[]>(this.apiUrl + `/getPost?postid=${postid}`);
+  }
+
   submitNewPostForm(formData: any): Observable<any> {
     return this.http.post(this.apiUrl + '/addPost', formData);
   }
@@ -52,6 +58,6 @@ export class ApiServicePost {
   }
 
   deleteComment(commentid: number): Observable<any> {
-    return this.http.delete<any>(this.apiUrl + `/DeleteComment?commentid=${commentid}`);
+    return this.http.delete<any>(this.apiUrl + `/DeleteComment?postcommentid=${commentid}`);
   }
 }
