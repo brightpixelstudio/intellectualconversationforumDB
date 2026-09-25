@@ -8,6 +8,15 @@
             <h3 class="pb-3">Update Comment</h3>
             <p>Update the comment below:</p>
             <form [formGroup]="updateCommentForm" (ngSubmit)="onSubmit()">
+              <hr />
+              <p class="title">
+                <strong>{{ getComment?.name }}</strong
+                >,<i>
+                  {{ getComment?.catagory }}, {{ getComment?.dateadded | date: 'mediumDate' }},
+                  {{ timePassed }}</i
+                >
+              </p>
+              <hr />
               <select #user name="user" id="user" formControlName="userid">
                 @for (user of userList; track user.userid) {
                   <option [value]="user.userid">{{ user.name }}</option>

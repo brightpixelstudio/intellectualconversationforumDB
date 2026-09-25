@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { DatePipe, JsonPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   FormsModule,
@@ -14,14 +15,16 @@ import { ApiServiceUser } from '../../services/userservice';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { GetComment } from '../../models/posts/getcomment';
+import { GlobalService } from '../../services/globalservice';
 
 @Component({
   selector: 'editcomment',
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [ReactiveFormsModule, FormsModule, DatePipe],
   templateUrl: './editcomment.html',
   styleUrl: './editcomment.css',
 })
 export class EditComment implements OnInit {
+  timePassed?: string;
   userList!: any[];
   commentId: number = 0;
   getComment: GetComment | null = null;
@@ -36,6 +39,7 @@ export class EditComment implements OnInit {
     private apiServiceUser: ApiServiceUser,
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
+    private globalService: GlobalService,
   ) {}
 
   ngOnInit(): void {
@@ -68,6 +72,7 @@ export class EditComment implements OnInit {
       next: (GetComment) => {
         this.getComment = GetComment[0];
         this.updateCommentForm.patchValue(GetComment[0]);
+        this.timePassed = this.globalService.getTimePassed(this.getComment.dateadded);
       },
       error: (err) => console.error('Failed to load post', err),
     });
