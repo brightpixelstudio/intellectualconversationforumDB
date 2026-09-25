@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
-import { JsonPipe } from '@angular/common';
+import { DatePipe, JsonPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   FormsModule,
@@ -10,21 +10,23 @@ import {
   FormBuilder,
 } from '@angular/forms';
 import { profanityValidator } from '../../utils/bad-words-validator';
-import { ApiServiceUser } from '../../services/userservice';
 import { ApiServiceUtility } from '../../services/utilityservice';
 import { ApiServicePost } from '../../services/postservice';
+import { GlobalService } from '../../services/globalservice';
 import { forkJoin } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { GetPost } from '../../models/posts/getpost';
 
 @Component({
   selector: 'editpost',
-  imports: [ReactiveFormsModule, FormsModule, JsonPipe],
+  imports: [ReactiveFormsModule, FormsModule, JsonPipe, DatePipe],
   templateUrl: './editpost.html',
   styleUrl: './editpost.css',
 })
 export class EditPost implements OnInit {
+  timePassed?: string;
   postId: number = 0;
-  userList!: any[];
+  getPost: GetPost | null = null;
   catagoryList!: any[];
   updatePostForm!: FormGroup;
   showSuccess = false;
@@ -33,16 +35,16 @@ export class EditPost implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private apiServiceUser: ApiServiceUser,
     private apiServiceUtilities: ApiServiceUtility,
     private apiServicePost: ApiServicePost,
+    private globalService: GlobalService,
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
     this.updatePostForm = this.fb.group({
-      catagoryid: new FormControl('', [Validators.required]),
+      postcatagoryid: new FormControl('', [Validators.required]),
       userid: new FormControl('', [Validators.required]),
       post: new FormControl('', [
         Validators.required,
@@ -52,11 +54,9 @@ export class EditPost implements OnInit {
     });
 
     forkJoin({
-      users: this.apiServiceUser.getUserList(),
       catagories: this.apiServiceUtilities.getCatagoryList(),
     }).subscribe({
       next: (response) => {
-        this.userList = response.users;
         this.catagoryList = response.catagories;
         this.cdr.detectChanges();
       },
@@ -71,7 +71,9 @@ export class EditPost implements OnInit {
     // load the members profile
     this.apiServicePost.getPost(this.postId).subscribe({
       next: (GetPost) => {
+        this.getPost = GetPost[0];
         this.updatePostForm.patchValue(GetPost[0]);
+        this.timePassed = this.globalService.getTimePassed(this.getPost.dateadded);
       },
       error: (err) => console.error('Failed to load post', err),
     });
@@ -82,15 +84,13 @@ export class EditPost implements OnInit {
   }
 
   onSubmit() {
-    /*
     this.showSuccess = false;
     this.showError = false;
 
-    if (this.postForm.valid) {
+    if (this.updatePostForm.valid) {
       // Pass the raw form values to your service
-      this.apiServicePost.submitNewPostForm(this.postForm.value).subscribe({
+      this.apiServicePost.submitUpdatePostForm(this.postId, this.updatePostForm.value).subscribe({
         next: (response) => {
-          this.postForm.reset();
           this.showSuccess = true;
         },
         error: (error: HttpErrorResponse) => {
@@ -109,6 +109,5 @@ export class EditPost implements OnInit {
     } else {
       console.log('Form is invalid');
     }
-      */
   }
 }

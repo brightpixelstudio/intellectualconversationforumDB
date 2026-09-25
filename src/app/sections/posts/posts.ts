@@ -1,17 +1,11 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectorRef,
-  ElementRef,
-  Renderer2,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { forkJoin } from 'rxjs';
 import { ApiServiceUser } from '../../services/userservice';
 import { ApiServiceUtility } from '../../services/utilityservice';
 import { ApiServicePost } from '../../services/postservice';
-import { forkJoin } from 'rxjs';
+import { GlobalService } from '../../services/globalservice';
 import { GetPostsByCategoryUser } from '../../models/posts/getpostsbycategoryuser';
 import { GetPostComments } from '../../models/posts/getpostcomments';
 
@@ -36,8 +30,8 @@ export class Posts implements OnInit {
     private apiServiceUser: ApiServiceUser,
     private apiServiceUtilities: ApiServiceUtility,
     private apiServicePost: ApiServicePost,
+    private globalService: GlobalService,
     private cdr: ChangeDetectorRef,
-    private renderer: Renderer2,
   ) {}
 
   ngOnInit(): void {
@@ -96,7 +90,6 @@ export class Posts implements OnInit {
           // we add to the comment list in case they want to delete one.
           this.commentList = [...this.commentList, ...data];
           let comments = this.buildCommemts();
-          console.log('Comments', this.commentList);
 
           // set the comments
           let content = `<div class="row mt-3 ms-4"><div class="col-11">${comments}</div></row>`;
@@ -179,7 +172,7 @@ export class Posts implements OnInit {
 
       // title
       const newDate = new Date(comment.dateadded);
-      const timePassed = this.getTimePassed(newDate);
+      const timePassed = this.globalService.getTimePassed(newDate);
       const mediumDate = this.mediumDateFormatter.format(newDate);
       let title = `<p class='comment' ><strong>${comment.name}</strong>, <span class="posttitleinfo">${mediumDate}, ${timePassed}</span></p>`;
 
@@ -195,28 +188,11 @@ export class Posts implements OnInit {
     return comments;
   }
 
+  getTimePassed(date: Date) {
+    return this.globalService.getTimePassed(date);
+  }
+
   mediumDateFormatter = new Intl.DateTimeFormat('en-US', {
     dateStyle: 'medium',
   });
-
-  getTimePassed(postDate: Date): string {
-    const currentDate: Date = new Date();
-    const newPostDate: Date = new Date(postDate);
-
-    const diffInSeconds = Math.abs(newPostDate.getTime() - currentDate.getTime()) / 1000;
-
-    const days = Math.floor(diffInSeconds / (60 * 60 * 24));
-    const hours = Math.floor((diffInSeconds / (60 * 60)) % 24);
-    const minutes = Math.floor((diffInSeconds / 60) % 60);
-
-    let posted: string = `Posted `;
-    if (days > 0) {
-      posted += `${days} days, ${hours} hours, ${minutes} minutes ago`;
-    } else if (hours > 0) {
-      posted += `${hours} hours, ${minutes} minutes ago`;
-    } else {
-      posted += `${minutes} minutes ago`;
-    }
-    return posted;
-  }
 }

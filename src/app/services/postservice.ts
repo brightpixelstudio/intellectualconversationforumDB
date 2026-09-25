@@ -60,4 +60,8 @@ export class ApiServicePost {
   deleteComment(commentid: number): Observable<any> {
     return this.http.delete<any>(this.apiUrl + `/DeleteComment?postcommentid=${commentid}`);
   }
+
+  submitUpdatePostForm(postid: number, formData: any): Observable<any> {
+    return this.http.post(this.apiUrl + `/updatePost?postid=${postid}`, formData);
+  }
 }

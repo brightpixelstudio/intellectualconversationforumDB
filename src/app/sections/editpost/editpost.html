@@ -8,20 +8,24 @@
             <h3 class="pb-3">Edit Post</h3>
             <p>Edit the post below:</p>
             <form [formGroup]="updatePostForm" (ngSubmit)="onSubmit()">
+              <hr />
+              <p class="title">
+                <strong>{{ getPost?.name }}</strong
+                >,<i>
+                  {{ getPost?.catagory }}, {{ getPost?.dateadded | date: 'mediumDate' }},
+                  {{ getPost?.count }} comments, {{ timePassed }}</i
+                >
+              </p>
+              <hr />
               <select
-                #catagory
-                name="catagory"
-                id="catagory"
+                #postcatagoryid
+                name="postcatagoryid"
+                id="postcatagoryid"
                 class="me-2"
-                formControlName="catagoryid"
+                formControlName="postcatagoryid"
               >
                 @for (catagory of catagoryList; track catagory.postcatagoryid) {
                   <option [value]="catagory.postcatagoryid">{{ catagory.catagory }}</option>
-                }
-              </select>
-              <select #user name="user" id="user" formControlName="userid">
-                @for (user of userList; track user.userid) {
-                  <option [value]="user.userid">{{ user.name }}</option>
                 }
               </select>
               <textarea
