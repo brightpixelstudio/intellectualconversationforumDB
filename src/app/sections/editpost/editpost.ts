@@ -68,7 +68,7 @@ export class EditPost implements OnInit {
     if (!postId) return;
     this.postId = +postId;
 
-    // load the members profile
+    // load the post
     this.apiServicePost.getPost(this.postId).subscribe({
       next: (GetPost) => {
         this.getPost = GetPost[0];
@@ -92,6 +92,7 @@ export class EditPost implements OnInit {
       this.apiServicePost.submitUpdatePostForm(this.postId, this.updatePostForm.value).subscribe({
         next: (response) => {
           this.showSuccess = true;
+          this.cdr.detectChanges();
         },
         error: (error: HttpErrorResponse) => {
           // Handle Bad Request (400) or other HTTP errors

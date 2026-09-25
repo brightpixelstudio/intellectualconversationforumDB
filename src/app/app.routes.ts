@@ -8,6 +8,7 @@ import { PostsPage } from './pages/posts/postspage';
 import { NewPostPage } from './pages/newpost/newpostpage';
 import { NewCommentPage } from './pages/newcomment/newcommentpage';
 import { EditPostPage } from './pages/editpost/editpostpage';
+import { EditCommentPage } from './pages/editcomment/editcommentpage';
 
 export const routes: Routes = [
   { path: '', component: Home, title: 'Registration' },
@@ -19,4 +20,5 @@ export const routes: Routes = [
   { path: 'newpost', component: NewPostPage, title: 'New Post' },
   { path: 'newcomment', component: NewCommentPage, title: 'New Comment' },
   { path: 'editpost', component: EditPostPage, title: 'Edit Post' },
+  { path: 'editcomment', component: EditCommentPage, title: 'Edit Comment' },
 ];

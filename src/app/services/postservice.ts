@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
 import { GetPostsByCategoryUser } from '../models/posts/getpostsbycategoryuser';
 import { GetPost } from '../models/posts/getpost';
+import { GetComment } from '../models/posts/getcomment';
 import { GetPostComments } from '../models/posts/getpostcomments';
 
 @Injectable({
@@ -41,6 +42,10 @@ export class ApiServicePost {
     return this.http.get<GetPost[]>(this.apiUrl + `/getPost?postid=${postid}`);
   }
 
+  getComment(commentid: number): Observable<GetComment[]> {
+    return this.http.get<GetComment[]>(this.apiUrl + `/getComment?commentid=${commentid}`);
+  }
+
   submitNewPostForm(formData: any): Observable<any> {
     return this.http.post(this.apiUrl + '/addPost', formData);
   }
@@ -63,5 +68,9 @@ export class ApiServicePost {
 
   submitUpdatePostForm(postid: number, formData: any): Observable<any> {
     return this.http.post(this.apiUrl + `/updatePost?postid=${postid}`, formData);
+  }
+
+  submitUpdateCommentForm(commentid: number, formData: any): Observable<any> {
+    return this.http.post(this.apiUrl + `/updateComment?commentid=${commentid}`, formData);
   }
 }

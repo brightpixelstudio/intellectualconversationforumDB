@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { forkJoin } from 'rxjs';
 import { ApiServiceUser } from '../../services/userservice';
@@ -32,6 +33,7 @@ export class Posts implements OnInit {
     private apiServicePost: ApiServicePost,
     private globalService: GlobalService,
     private cdr: ChangeDetectorRef,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -117,46 +119,51 @@ export class Posts implements OnInit {
     }
   }
 
-  onDeleteCommentClick(event: MouseEvent) {
-    const confirmed = window.confirm('Are you sure you want to delete this comment?');
-    if (confirmed) {
-      // remove the record from the list
-      const target = event.target as HTMLElement;
+  onCommentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
 
-      // Check if the clicked element or its parent matches your target class
-      if (target && target.classList.contains('dynamic-btn')) {
-        // look for the classes
-        let commentClass = Array.from(target.classList).find((className) =>
-          className.startsWith('comment-'),
-        );
-        let postClass = Array.from(target.classList).find((className) =>
-          className.startsWith('post-'),
-        );
-        if (!commentClass || !postClass) return;
+    // get the postid and commentid
+    let commentClass = Array.from(target.classList).find((className) =>
+      className.startsWith('comment-'),
+    );
+    let postClass = Array.from(target.classList).find((className) => className.startsWith('post-'));
+    if (!commentClass || !postClass) return;
 
-        // remove all comments in the list for this post
-        const postId: string = postClass.substring(postClass.indexOf('-') + 1);
-        const commentId: string = commentClass.substring(commentClass.indexOf('-') + 1);
+    // remove all comments in the list for this post
+    const postId: string = postClass.substring(postClass.indexOf('-') + 1);
+    const commentId: string = commentClass.substring(commentClass.indexOf('-') + 1);
 
-        // delete all these comments from this post
-        this.commentList = this.commentList.filter((comment) => comment.postid !== +postId);
-
-        // delete the actual comment
-        this.apiServicePost.deleteComment(+commentId).subscribe({
-          next: (response) => {
-            // reload the comments for this post
-            this.onCommentsClick(postId);
-            this.cdr.detectChanges();
-          },
-          error: (error) => {
-            window.alert('Error deleting this post');
-          },
-        });
-      }
+    // is this a delete?
+    if (target.classList.contains('deletecommentbtn')) {
+      this.deleteComment(+commentId, postId);
+    } else {
+      this.router.navigate(['/editcomment'], {
+        queryParams: { commentid: commentId },
+      });
     }
   }
 
   // helpers
+  deleteComment(commentId: number, postId: string) {
+    const confirmed = window.confirm('Are you sure you want to delete this comment?');
+    if (confirmed) {
+      // delete all these comments from this post
+      this.commentList = this.commentList.filter((comment) => comment.postid !== +postId);
+
+      // delete the actual comment
+      this.apiServicePost.deleteComment(commentId).subscribe({
+        next: (response) => {
+          // reload the comments for this post
+          this.onCommentsClick(postId);
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          window.alert('Error deleting this post');
+        },
+      });
+    }
+  }
+
   removeItem<T>(list: T[], condition: (item: T) => boolean): void {
     const index = list.findIndex(condition);
     if (index !== -1) {
@@ -176,11 +183,11 @@ export class Posts implements OnInit {
       const mediumDate = this.mediumDateFormatter.format(newDate);
       let title = `<p class='comment' ><strong>${comment.name}</strong>, <span class="posttitleinfo">${mediumDate}, ${timePassed}</span></p>`;
 
-      // delete button
-      let deletebtn = `<div><a class='btn btn-danger dynamic-btn deletecommentbtn mt-2 post-${comment.postid} comment-${comment.postcommentid}'>Delete</a></div>`;
+      // edit / delete button
+      let editdeletebtn = `<div><a class='btn btn-primary editcommentbtn mt-2 me-1 post-${comment.postid} comment-${comment.postcommentid}'>Edit</a><a class='btn btn-danger deletecommentbtn mt-2 post-${comment.postid} comment-${comment.postcommentid}'>Delete</a></div>`;
 
       // comment
-      let theComment = comment.comment + deletebtn + '<hr/>';
+      let theComment = comment.comment + editdeletebtn + '<hr/>';
 
       // add to the comments
       comments += title + theComment;
